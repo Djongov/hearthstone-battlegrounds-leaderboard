@@ -1,0 +1,4 @@
+.hoverbright:hover {
+    /* increase the brightness on hover */
+    filter: brightness(1.75);
+}
