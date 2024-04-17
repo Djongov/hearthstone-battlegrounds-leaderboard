@@ -77,15 +77,45 @@ define("MAIN_MENU", [
     'Home' => [
         'link' => '/',
     ],
-    'EU' => [
-        'link' => '/eu',
+    'Duos' => [
+        'link' => [
+            'Europe' => [
+                'sub_link' => '/duos/eu'
+            ],
+            'Americas' => [
+                'sub_link' => '/duos/us'
+            ],
+            'Asia-Pacific' => [
+                'sub_link' => '/duos/ap'
+            ]
+        ]
     ],
-    'US' => [
-        'link' => '/us',
+    'Solo' => [
+        'link' => [
+            'Europe' => [
+                'sub_link' => '/solo/eu'
+            ],
+            'Americas' => [
+                'sub_link' => '/solo/us'
+            ],
+            'Asia-Pacific' => [
+                'sub_link' => '/solo/ap'
+            ]
+        ]
     ],
-    'Asia-Pacific' => [
-        'link' => '/ap',
-    ],
+    'Season 6' => [
+        'link' => [
+            'Europe' => [
+                'sub_link' => '/6/eu'
+            ],
+            'Americas' => [
+                'sub_link' => '/6/us'
+            ],
+            'Asia-Pacific' => [
+                'sub_link' => '/6/ap'
+            ]
+        ]
+    ]
 ]);
 
 /* Username drop down menu */

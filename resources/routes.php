@@ -33,10 +33,19 @@ return function (RouteCollector $router) {
     // Landing
     // Root page
     $router->addRoute('GET', '/', [$viewsFolder . '/landing/main.php', $genericMetaDataArray]);
-    // Eu
-    $router->addRoute('GET', '/eu', [$viewsFolder . '/landing/eu.php', $genericMetaDataArray]);
-    $router->addRoute('GET', '/us', [$viewsFolder . '/landing/us.php', $genericMetaDataArray]);
-    $router->addRoute('GET', '/ap', [$viewsFolder . '/landing/ap.php', $genericMetaDataArray]);
+    // Solo pages
+    $router->addRoute('GET', '/solo/eu', [$viewsFolder . '/battlegrounds/show-leaderboard.php', $genericMetaDataArray]);
+    $router->addRoute('GET', '/solo/us', [$viewsFolder . '/battlegrounds/show-leaderboard.php', $genericMetaDataArray]);
+    $router->addRoute('GET', '/solo/ap', [$viewsFolder . '/battlegrounds/show-leaderboard.php', $genericMetaDataArray]);
+
+    // Duos pages
+    $router->addRoute('GET', '/duos/eu', [$viewsFolder . '/battlegrounds/show-leaderboard.php', $genericMetaDataArray]);
+    $router->addRoute('GET', '/duos/us', [$viewsFolder . '/battlegrounds/show-leaderboard.php', $genericMetaDataArray]);
+    $router->addRoute('GET', '/duos/ap', [$viewsFolder . '/battlegrounds/show-leaderboard.php', $genericMetaDataArray]);
+
+    $router->addRoute('GET', '/6/eu', [$viewsFolder . '/battlegrounds/show-leaderboard.php', $genericMetaDataArray]);
+    $router->addRoute('GET', '/6/us', [$viewsFolder . '/battlegrounds/show-leaderboard.php', $genericMetaDataArray]);
+    $router->addRoute('GET', '/6/ap', [$viewsFolder . '/battlegrounds/show-leaderboard.php', $genericMetaDataArray]);
 
     // HS Api Routes
     $router->addRoute('POST', '/api/eu/6/record', [$viewsFolder . '/api/eu/6/record.php']);
@@ -47,13 +56,26 @@ return function (RouteCollector $router) {
     $router->addRoute('GET', '/api/us/6/get', [$viewsFolder . '/api/us/6/get.php']);
     $router->addRoute('GET', '/api/ap/6/get', [$viewsFolder . '/api/ap/6/get.php']);
 
-    $router->addRoute('POST', '/api/eu/7/record', [$viewsFolder . '/api/eu/7/record.php']);
-    $router->addRoute('POST', '/api/us/7/record', [$viewsFolder . '/api/us/7/record.php']);
-    $router->addRoute('POST', '/api/ap/7/record', [$viewsFolder . '/api/ap/7/record.php']);
+    $router->addRoute('GET', '/api/6/eu/get', [$viewsFolder . '/api/battlegrounds/get.php']);
+    $router->addRoute('GET', '/api/6/us/get', [$viewsFolder . '/api/battlegrounds/get.php']);
+    $router->addRoute('GET', '/api/6/ap/get', [$viewsFolder . '/api/battlegrounds/get.php']);
 
-    $router->addRoute('GET', '/api/eu/7/get', [$viewsFolder . '/api/eu/7/get.php']);
-    $router->addRoute('GET', '/api/us/7/get', [$viewsFolder . '/api/us/7/get.php']);
-    $router->addRoute('GET', '/api/ap/7/get', [$viewsFolder . '/api/ap/7/get.php']);
+    $router->addRoute('POST', '/api/6/eu/record', [$viewsFolder . '/api/battlegrounds/record.php']);
+    $router->addRoute('POST', '/api/6/us/record', [$viewsFolder . '/api/battlegrounds/record.php']);
+    $router->addRoute('POST', '/api/6/ap/record', [$viewsFolder . '/api/battlegrounds/record.php']);
+
+    // Season 7 Api Routes
+    $router->addRoute('POST', '/api/7/duos/eu/record', [$viewsFolder . '/api/battlegrounds/record.php']);
+    $router->addRoute('POST', '/api/7/duos/us/record', [$viewsFolder . '/api/battlegrounds/record.php']);
+    $router->addRoute('POST', '/api/7/duos/ap/record', [$viewsFolder . '/api/battlegrounds/record.php']);
+
+    $router->addRoute('POST', '/api/7/solo/eu/record', [$viewsFolder . '/api/battlegrounds/record.php']);
+    $router->addRoute('POST', '/api/7/solo/us/record', [$viewsFolder . '/api/battlegrounds/record.php']);
+    $router->addRoute('POST', '/api/7/solo/ap/record', [$viewsFolder . '/api/battlegrounds/record.php']);
+
+    $router->addRoute('GET', '/api/7/solo/eu/get', [$viewsFolder . '/api/battlegrounds/get.php']);
+    $router->addRoute('GET', '/api/7/solo/us/get', [$viewsFolder . '/api/battlegrounds/get.php']);
+    $router->addRoute('GET', '/api/7/solo/ap/get', [$viewsFolder . '/api/battlegrounds/get.php']);
 
     // Login page
     $router->addRoute('GET', '/login', [$viewsFolder . '/landing/login.php', $genericMetaDataArray]);

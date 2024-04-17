@@ -15,9 +15,15 @@ class RequireLogin
     {
         $loginExempt = [
             '/',
-            '/eu',
-            '/us',
-            '/ap',
+            '/duos/us',
+            '/duos/eu',
+            '/duos/ap',
+            '/solo/us',
+            '/solo/eu',
+            '/solo/ap',
+            '/6/eu',
+            '/6/us',
+            '/6/ap',
             '/api/*'
         ];
         

@@ -34,7 +34,7 @@ class DataGridDBTable extends DataGrid
         $dataResult = MYSQL::query($query);
 
         if ($dataResult->num_rows === 0) {
-            return Alerts::danger('No results for ' . $query);
+            return Alerts::danger('No results for ' . $dbName);
         }
 
         $data = $dataResult->fetch_all(MYSQLI_ASSOC);
