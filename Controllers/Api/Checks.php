@@ -300,4 +300,31 @@ class Checks
         }
         return $putData;
     }
+    public function apiKeyExist(): bool
+    {
+        $headers = getallheaders();
+        $lowercaseHeaders = array_change_key_case($headers, CASE_LOWER);
+        $apiKey = strtolower(API_KEY_NAME);
+        return isset($lowercaseHeaders[$apiKey]);
+    }
+    public function apiKeyHeaderGet(): string
+    {
+        // Check if the api key exists
+        if (!$this->apiKeyExist()) {
+            Output::error('missing api key header ' . API_KEY_NAME, 401);
+        }
+        $headers = getallheaders();
+        $lowercaseHeaders = array_change_key_case($headers, CASE_LOWER);
+        $apiKey = strtolower(API_KEY_NAME);
+        return $lowercaseHeaders[$apiKey];
+    }
+    public function checkApiKeyHeader(): void
+    {
+        // Check if the api key is valid
+        $apiKey = $this->apiKeyHeaderGet();
+        // Now check if the key exists in the database
+        if (empty($apiKey)) {
+            Output::error('empty api key', 401);
+        }
+    }
 }

@@ -345,9 +345,9 @@ if (tables.length > 0) {
 }
 
 const drawDataGrid = (id) => {
-    const tableWrapper = $('<div class="overflow-auto max-h-[44rem]"></div>'); // Create a wrapper div for the table
+    const tableWrapper = $('<div class="overflow-auto w-fit max-h-[44rem]"></div>'); // Create a wrapper div for the table
     const table = $(`#${id}`).DataTable({
-        ordering: true, // Need to make it work so it orders from the 1st row not the 2nd where the filters are
+        ordering: false, // Need to make it work so it orders from the 1st row not the 2nd where the filters are
         order: [[0, 'asc']],
         // Make sure that the ordering is done on the 1st row not the 2nd where the filters are
         orderCellsTop: true,
@@ -358,7 +358,7 @@ const drawDataGrid = (id) => {
         //scrollCollapse: false,
         paging: true,
         pagingType: 'full_numbers',
-        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
         //stateSave: true,
         createdRow: function (row, data, dataIndex) {
             $(row).attr('tabindex', dataIndex)
@@ -381,7 +381,7 @@ const drawDataGrid = (id) => {
 
 
 const drawDataGridFromData = (json, skeletonId) => {
-    const tableWrapper = $('<div class="mx-2 overflow-auto max-h-[44rem]"></div>'); // Create a wrapper div for the table
+    const tableWrapper = $('<div class="mx-2 overflow-auto w-fit max-h-[44rem]"></div>'); // Create a wrapper div for the table
     // Create the loading screen for the table
     const loadingScreen = tableLoadingScreen(skeletonId);
     console.log(loadingScreen);

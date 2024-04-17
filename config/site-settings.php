@@ -10,16 +10,16 @@ Branding & SEO Settings
 // Whether to show the loading screen on page load
 define("SHOW_LOADING_SCREEN", true);
 // Site title, Goes on footer and main menu header
-define("SITE_TITLE", "Dashboard Template");
+define("SITE_TITLE", "Hearthstone Battlegrounds Leaderboards");
 // Key words for SEO
 define("GENERIC_KEYWORDS", [
     SITE_TITLE,
 ]);
 // Site description for SEO
-define("GENERIC_DESCRIPTION", "Dashboard Template");
+define("GENERIC_DESCRIPTION", "Hearthstone Battlegrounds Leaderboards");
 
 // Logo for the SEO OG tags
-define("OG_LOGO", 'https://' . $_SERVER['HTTP_HOST'] . '/assets/images/Logos/awm-full-logo-card.png');
+define("OG_LOGO", 'https://' . $_SERVER['HTTP_HOST'] . '/assets/images/BGSingle_Icon.webp');
 
 // Used in terms of service
 define("THIRD_PARTY_LIST", []);
@@ -37,7 +37,7 @@ define("COMPANY_ADDRESS", "Sofia, Khan Krum street 13");
 define("COMPANY_URL", "https://sunwellsolutions.com");
 
 // Logo that sits on the menu and the footer
-define("LOGO", '/assets/images/logo.jpg');
+define("LOGO", '/assets/images/BGSingle_Icon.webp');
 
 // Default set of metadata for the site, used in routes.php
 define("DEFAULT_METADATA", [
@@ -46,6 +46,8 @@ define("DEFAULT_METADATA", [
     'keywords' => GENERIC_KEYWORDS,
     'thumbimage' => OG_LOGO,
 ]);
+
+define("API_KEY_NAME", "X-API-KEY");
 
 // Default theme for unathenticated users and first-time logins, possible values: 'amber', 'green', 'stone', 'rose', 'lime', 'teal', 'sky', 'purple', 'red', 'fuchsia', 'indigo'
 define("COLOR_SCHEME", "amber");
@@ -64,6 +66,13 @@ define("DB_HOST", $_ENV['DB_HOST']);
 define("DB_USER", $_ENV['DB_USER']);
 define("DB_PASS", $_ENV['DB_PASS']);
 define("DB_NAME", $_ENV['DB_NAME']);
+
+define("EU_SEASON_6_TABLE", 'battlegrounds_season_6_eu');
+define("US_SEASON_6_TABLE", 'battlegrounds_season_6_us');
+define("AP_SEASON_6_TABLE", 'battlegrounds_season_6_ap');
+define("EU_SEASON_7_TABLE", 'battlegrounds_season_7_eu');
+define("US_SEASON_7_TABLE", 'battlegrounds_season_7_us');
+define("AP_SEASON_7_TABLE", 'battlegrounds_season_7_ap');
 
 // This is the DigiCertGlobalRootCA.crt.pem file that is used to verify the SSL connection to the DB. It's located in the .tools folder
 define("CA_CERT", dirname($_SERVER['DOCUMENT_ROOT']) . DIRECTORY_SEPARATOR . '.tools' . DIRECTORY_SEPARATOR . 'DigiCertGlobalRootCA.crt.pem');
@@ -133,19 +142,19 @@ if (LOCAL_USER_LOGIN) {
     // This is used by the JWT handler to sign the tokens. It's should to be a base64 encoded string of the private key
     define("JWT_PRIVATE_KEY", $_ENV['JWT_PRIVATE_KEY']);
     // Whether to allow users to manually register
-    define('MANUAL_REGISTRATION', true);
+    define('MANUAL_REGISTRATION', false);
 }
 // Whether to allow users to login with Azure AD accounts
-define('AZURE_AD_LOGIN', true);
+define('AZURE_AD_LOGIN', false);
 if (AZURE_AD_LOGIN) {
     include_once dirname($_SERVER['DOCUMENT_ROOT']) . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'azure-ad-auth-config.php';
 }
-define('MICROSOFT_LIVE_LOGIN', true);
+define('MICROSOFT_LIVE_LOGIN', false);
 if (MICROSOFT_LIVE_LOGIN) {
     include_once dirname($_SERVER['DOCUMENT_ROOT']) . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'microsoft-live-auth-config.php';
 }
 // Google login
-define('GOOGLE_LOGIN', true);
+define('GOOGLE_LOGIN', false);
 if (GOOGLE_LOGIN) {
     include_once dirname($_SERVER['DOCUMENT_ROOT']) . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'google-auth-config.php';
 }

@@ -33,10 +33,32 @@ return function (RouteCollector $router) {
     // Landing
     // Root page
     $router->addRoute('GET', '/', [$viewsFolder . '/landing/main.php', $genericMetaDataArray]);
+    // Eu
+    $router->addRoute('GET', '/eu', [$viewsFolder . '/landing/eu.php', $genericMetaDataArray]);
+    $router->addRoute('GET', '/us', [$viewsFolder . '/landing/us.php', $genericMetaDataArray]);
+    $router->addRoute('GET', '/ap', [$viewsFolder . '/landing/ap.php', $genericMetaDataArray]);
+
+    // HS Api Routes
+    $router->addRoute('POST', '/api/eu/6/record', [$viewsFolder . '/api/eu/6/record.php']);
+    $router->addRoute('POST', '/api/us/6/record', [$viewsFolder . '/api/us/6/record.php']);
+    $router->addRoute('POST', '/api/ap/6/record', [$viewsFolder . '/api/ap/6/record.php']);
+
+    $router->addRoute('GET', '/api/eu/6/get', [$viewsFolder . '/api/eu/6/get.php']);
+    $router->addRoute('GET', '/api/us/6/get', [$viewsFolder . '/api/us/6/get.php']);
+    $router->addRoute('GET', '/api/ap/6/get', [$viewsFolder . '/api/ap/6/get.php']);
+
+    $router->addRoute('POST', '/api/eu/7/record', [$viewsFolder . '/api/eu/7/record.php']);
+    $router->addRoute('POST', '/api/us/7/record', [$viewsFolder . '/api/us/7/record.php']);
+    $router->addRoute('POST', '/api/ap/7/record', [$viewsFolder . '/api/ap/7/record.php']);
+
+    $router->addRoute('GET', '/api/eu/7/get', [$viewsFolder . '/api/eu/7/get.php']);
+    $router->addRoute('GET', '/api/us/7/get', [$viewsFolder . '/api/us/7/get.php']);
+    $router->addRoute('GET', '/api/ap/7/get', [$viewsFolder . '/api/ap/7/get.php']);
+
     // Login page
     $router->addRoute('GET', '/login', [$viewsFolder . '/landing/login.php', $genericMetaDataArray]);
     // Install apge
-    $router->addRoute('GET', '/install', [$viewsFolder . '/landing/install.php', $genericMetaDataArray]);
+    //$router->addRoute('GET', '/install', [$viewsFolder . '/landing/install.php', $genericMetaDataArray]);
     // Register page
     $router->addRoute('GET', '/register', [$viewsFolder . '/landing/register.php', $genericMetaDataArray]);
     // User settings page

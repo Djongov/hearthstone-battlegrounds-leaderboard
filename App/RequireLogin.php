@@ -15,16 +15,10 @@ class RequireLogin
     {
         $loginExempt = [
             '/',
-            '/docs',
-            '/docs/*',
-            '/csp-report',
-            '/register',
-            '/auth-verify',
-            '/api/user',
-            '/install',
-            '/charts',
-            '/forms',
-            '/datagrid'
+            '/eu',
+            '/us',
+            '/ap',
+            '/api/*'
         ];
         
         $loggedIn = false;

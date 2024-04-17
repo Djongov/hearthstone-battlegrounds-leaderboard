@@ -3,6 +3,7 @@
 namespace App\Database;
 
 use Controllers\Api\Output;
+use App\Install;
 use Exception;
 
 class MYSQL
@@ -17,8 +18,10 @@ class MYSQL
             try {
                 $conn->real_connect('p:' . DB_HOST, DB_USER, DB_PASS, DB_NAME, 3306, MYSQLI_CLIENT_SSL);
             } catch (\mysqli_sql_exception $e) {
-                if (str_contains($e->getMessage(), "Unknown database") !== false) {
-                    Output::error('Database "' . DB_NAME . '" does not exist, you need to go through the /install endpoint' . $_SERVER['REQUEST_URI'], 400);
+                if (str_contains($e->getMessage(), "Unknown database")) {
+                    //Output::error('Database "' . DB_NAME . '" does not exist, you need to go through the /install endpoint' . $_SERVER['REQUEST_URI'], 400);
+                    $install = new Install();
+                    echo $install->start($conn);
                 } else {
                     Output::error($e->getMessage(), 400);
                 }
@@ -27,8 +30,10 @@ class MYSQL
             try {
                 $conn->real_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
             } catch (\mysqli_sql_exception $e) {
-                if (str_contains($e->getMessage(), "Unknown database") !== false) {
-                    Output::error('Database "' . DB_NAME . '" does not exist, you need to go through the /install endpoint', 400);
+                if (str_contains($e->getMessage(), "Unknown database")) {
+                    //Output::error('Database "' . DB_NAME . '" does not exist, you need to go through the /install endpoint', 400);
+                    $install = new Install();
+                    echo $install->start($conn);
                 } else {
                     Output::error($e->getMessage(), 400);
                 }

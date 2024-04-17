@@ -22,7 +22,7 @@ $checks->checkParams($allowedParams, $_POST);
 
 $query = $_POST['query'];
 
-if (str_starts_with($query, 'DROP') || str_starts_with($query, 'TRUNCATE')) {
+if (str_starts_with($query, 'DROP')/* || str_starts_with($query, 'TRUNCATE')*/) {
     echo Alerts::danger('You cannot execute DROP or TRUNCATE queries');
     return;
 }

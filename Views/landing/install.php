@@ -4,7 +4,6 @@ use Controllers\Api\Output;
 use App\Install;
 use Components\Alerts;
 
-
 // If we need to instrall
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $conn = mysqli_init();
@@ -15,7 +14,7 @@ if (defined("MYSQL_SSL") && MYSQL_SSL) {
         echo Alerts::info('Successfully connected to the database. Nothing to do here.');
     } catch (\mysqli_sql_exception $e) {
         $error = $e->getMessage();
-        if (str_contains($error, "Unknown database") !== false) {
+        if (str_contains($error, "Unknown database")) {
             $install = new Install();
             echo $install->start($conn);
         } else {
@@ -29,7 +28,7 @@ if (defined("MYSQL_SSL") && MYSQL_SSL) {
     } catch (\mysqli_sql_exception $e) {
         $error = $e->getMessage();
         // Let's check if the Database exists
-        if (str_contains($error, "Unknown database") !== false) {
+        if (str_contains($error, "Unknown database")) {
             $install = new Install();
             echo $install->start($conn);
         } else {
