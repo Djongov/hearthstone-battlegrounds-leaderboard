@@ -24,17 +24,17 @@ class DataGridDBTable extends DataGrid
         // Save the result as array in $data to be used for export later
         $data = $queryResult->fetch_all(MYSQLI_ASSOC);
         if (count($data) === 0) {
-            return Alerts::danger('No results for ' . $table);
+            return Alerts::danger('No results for ' . $title);
         }
         // Create the table
         return self::createTable($table, $data, $theme, $title, $edit, $delete);
     }
-    public static function renderQuery(string $title, string $query, string $theme, bool $edit = true, bool $delete = true, $dbName = '')
+    public static function renderQuery(string $title, string $query, string $theme, bool $edit = true, bool $delete = true, $dbName = '', $filters = true)
     {
         $dataResult = MYSQL::query($query);
 
         if ($dataResult->num_rows === 0) {
-            return Alerts::danger('No results for ' . $dbName);
+            return Alerts::danger('No results for ' . $title);
         }
 
         $data = $dataResult->fetch_all(MYSQLI_ASSOC);
@@ -53,7 +53,7 @@ class DataGridDBTable extends DataGrid
         }
 
         // Create the table
-        return self::createTable($dbName, $data, $theme, $title, $edit, $delete);
+        return self::createTable($dbName, $data, $theme, $title, $edit, $delete, $filters);
     }
     private static function add_quotes($str)
     {

@@ -77,19 +77,6 @@ define("MAIN_MENU", [
     'Home' => [
         'link' => '/',
     ],
-    'Duos' => [
-        'link' => [
-            'Europe' => [
-                'sub_link' => '/duos/eu'
-            ],
-            'Americas' => [
-                'sub_link' => '/duos/us'
-            ],
-            'Asia-Pacific' => [
-                'sub_link' => '/duos/ap'
-            ]
-        ]
-    ],
     'Solo' => [
         'link' => [
             'Europe' => [
@@ -100,6 +87,19 @@ define("MAIN_MENU", [
             ],
             'Asia-Pacific' => [
                 'sub_link' => '/solo/ap'
+            ]
+        ]
+    ],
+    'Duos' => [
+        'link' => [
+            'Europe' => [
+                'sub_link' => '/duos/eu'
+            ],
+            'Americas' => [
+                'sub_link' => '/duos/us'
+            ],
+            'Asia-Pacific' => [
+                'sub_link' => '/duos/ap'
             ]
         ]
     ],
@@ -115,6 +115,9 @@ define("MAIN_MENU", [
                 'sub_link' => '/6/ap'
             ]
         ]
+    ],
+    'API' => [
+        'link' => '/docs'
     ]
 ]);
 

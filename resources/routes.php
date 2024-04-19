@@ -33,6 +33,7 @@ return function (RouteCollector $router) {
     // Landing
     // Root page
     $router->addRoute('GET', '/', [$viewsFolder . '/landing/main.php', $genericMetaDataArray]);
+    $router->addRoute('GET', '/contact', [$viewsFolder . '/landing/contact.php', $genericMetaDataArray]);
     // Solo pages
     $router->addRoute('GET', '/solo/eu', [$viewsFolder . '/battlegrounds/show-leaderboard.php', $genericMetaDataArray]);
     $router->addRoute('GET', '/solo/us', [$viewsFolder . '/battlegrounds/show-leaderboard.php', $genericMetaDataArray]);

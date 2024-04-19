@@ -24,7 +24,11 @@ class RequireLogin
             '/6/eu',
             '/6/us',
             '/6/ap',
-            '/api/*'
+            '/api/*',
+            '/docs',
+            '/docs/*',
+            '/login',
+            '/contact'
         ];
         
         $loggedIn = false;

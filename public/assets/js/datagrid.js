@@ -261,56 +261,56 @@ if (tables.length > 0) {
                     let modalBody = document.getElementById(`${tableId}-body`);
                     let responseStatus = 0;
                     deleteModalButton.addEventListener('click', () => {
-                    // transform the button text to a loader
-                    deleteModalButton.innerHTML = loaderString();
-                    // Build the body of the delete request
-                    const formData = new URLSearchParams();
-                    formData.append('id', event.target.dataset.id);
-                    formData.append('table', event.target.dataset.table);
-                    formData.append('csrf_token', event.target.dataset.csrf);
-                    fetch('/api/datagrid/delete-records', {
-                        method: 'POST',
-                        headers: {
-                            'secretHeader': 'badass',
-                            'X-CSRF-TOKEN': event.target.dataset.csrf
-                        },
-                        body: formData,
-                        redirect: 'manual'
-                    }).then(response => {
-                        responseStatus = response.status;
-                        if (responseStatus === 403 || responseStatus === 401 || responseStatus === 0) {
-                            modalBody.innerHTML = `<p class="text-red-500 font-semibold">${json.data}</p>`;
-                            location.reload();
-                        } else {
-                            return response.json()
-                        }
-                    }).then(json => {
-                        // Return the overflow of the body
-                        document.body.classList.remove('overflow-hidden');
-                        // Remove the blur by toggling the blur class
-                        toggleBlur(modal);
-                        if (responseStatus === 200) {
-                            // if we are deleting from a table, Delete the closest row
-                            const closestRow = button.closest('tr');
-                            if (closestRow) {
-                                closestRow.remove();
+                        // transform the button text to a loader
+                        deleteModalButton.innerHTML = loaderString();
+                        // Build the body of the delete request
+                        const formData = new URLSearchParams();
+                        formData.append('id', event.target.dataset.id);
+                        formData.append('table', event.target.dataset.table);
+                        formData.append('csrf_token', event.target.dataset.csrf);
+                        fetch('/api/datagrid/delete-records', {
+                            method: 'POST',
+                            headers: {
+                                'secretHeader': 'badass',
+                                'X-CSRF-TOKEN': event.target.dataset.csrf
+                            },
+                            body: formData,
+                            redirect: 'manual'
+                        }).then(response => {
+                            responseStatus = response.status;
+                            if (responseStatus === 403 || responseStatus === 401 || responseStatus === 0) {
+                                modalBody.innerHTML = `<p class="text-red-500 font-semibold">${json.data}</p>`;
+                                location.reload();
+                            } else {
+                                return response.json()
                             }
-                            // Decrement the total results
-                            totalResults.innerText = parseInt(totalResults.innerText) - 1;
-                            // Decrease the filtered results if the row is visible
-                            if (closestRow.style.display !== 'none') {
-                                filteredResults.innerText = parseInt(filteredResults.innerText) - 1;
+                        }).then(json => {
+                            // Return the overflow of the body
+                            document.body.classList.remove('overflow-hidden');
+                            // Remove the blur by toggling the blur class
+                            toggleBlur(modal);
+                            if (responseStatus === 200) {
+                                // if we are deleting from a table, Delete the closest row
+                                const closestRow = button.closest('tr');
+                                if (closestRow) {
+                                    closestRow.remove();
+                                }
+                                // Decrement the total results
+                                totalResults.innerText = parseInt(totalResults.innerText) - 1;
+                                // Decrease the filtered results if the row is visible
+                                if (closestRow.style.display !== 'none') {
+                                    filteredResults.innerText = parseInt(filteredResults.innerText) - 1;
+                                }
+                                // Completely remove the modal
+                                modal.remove();
+                            } else {
+                                deleteModalButton.textContent = 'Retry';
+                                modalBody.innerHTML = `<p class="text-red-500 font-semibold">${json.data}</p>`;
                             }
-                            // Completely remove the modal
-                            modal.remove();
-                        } else {
-                            deleteModalButton.textContent = 'Retry';
-                            modalBody.innerHTML = `<p class="text-red-500 font-semibold">${json.data}</p>`;
-                        }
-                    }).catch(error => {
-                        console.error('Error during fetch:', error);
+                        }).catch(error => {
+                            console.error('Error during fetch:', error);
+                        })
                     })
-                })
                 }, false);
             });
         }
@@ -345,9 +345,9 @@ if (tables.length > 0) {
 }
 
 const drawDataGrid = (id) => {
-    const tableWrapper = $('<div class="overflow-auto w-fit max-h-[44rem]"></div>'); // Create a wrapper div for the table
+    const tableWrapper = $('<div class="overflow-auto max-h-[44rem]"></div>'); // Create a wrapper div for the table
     const table = $(`#${id}`).DataTable({
-        ordering: false, // Need to make it work so it orders from the 1st row not the 2nd where the filters are
+        ordering: true, // Need to make it work so it orders from the 1st row not the 2nd where the filters are
         order: [[0, 'asc']],
         // Make sure that the ordering is done on the 1st row not the 2nd where the filters are
         orderCellsTop: true,
@@ -358,7 +358,7 @@ const drawDataGrid = (id) => {
         //scrollCollapse: false,
         paging: true,
         pagingType: 'full_numbers',
-        lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
         //stateSave: true,
         createdRow: function (row, data, dataIndex) {
             $(row).attr('tabindex', dataIndex)
@@ -381,10 +381,9 @@ const drawDataGrid = (id) => {
 
 
 const drawDataGridFromData = (json, skeletonId) => {
-    const tableWrapper = $('<div class="mx-2 overflow-auto w-fit max-h-[44rem]"></div>'); // Create a wrapper div for the table
+    const tableWrapper = $('<div class="mx-2 overflow-auto max-h-[44rem]"></div>'); // Create a wrapper div for the table
     // Create the loading screen for the table
     const loadingScreen = tableLoadingScreen(skeletonId);
-    console.log(loadingScreen);
     // Append the loading screen before the table
     $(`#${skeletonId}`).before(loadingScreen);
 
@@ -471,7 +470,10 @@ const drawDataGridFromData = (json, skeletonId) => {
  * @param {Array} columnSkipArray - An optional array of column indexes to skip.
  * @returns {void} - Creates the DataTable filters. Does not return a value.
  */
-const buildDataGridFilters = (table, tableId, columnSkipArray = []) => {
+const buildDataGridFilters = (table, tableId, columnSkipArray = [], enabled = true) => {
+    if (!enabled) {
+        return;
+    }
     // Loop through each column of the DataTable
     table.columns().every(function (col) {
         if (columnSkipArray.includes(col)) {
@@ -505,7 +507,7 @@ const buildDataGridFilters = (table, tableId, columnSkipArray = []) => {
         column.data().unique().sort().each(function (d, j) {
             if (d !== null) {
                 let optionText = d;
-                if (optionText.length > maxOptionWidth / 2)  {
+                if (optionText.length > maxOptionWidth / 2) {
                     if (optionText.length > maxOptionWidth / 2) {
                         // Truncate the option text if it's longer than the maxOptionWidth
                         optionText = optionText.substring(0, maxOptionWidth / 2) + '...';
@@ -544,7 +546,7 @@ const buildDataGridFilters = (table, tableId, columnSkipArray = []) => {
         $(`#${tableId} thead tr:eq(0) th`).addClass('p-2');
         $(`#${tableId} thead tr:eq(0) th`).addClass('border');
         $(`#${tableId} thead tr:eq(0) th`).addClass('border-slate-400');
-        
+
         $(`#${tableId} thead tr:eq(1) th`).addClass('p-4');
         $(`#${tableId} thead tr:eq(1) th`).addClass('border');
         $(`#${tableId} thead tr:eq(1) th`).addClass('border-slate-400');

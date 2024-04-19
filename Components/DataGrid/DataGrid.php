@@ -8,7 +8,7 @@ use App\Security\CSRF;
 
 class DataGrid
 {
-    public static function createTable(string $dbTable, array $data, string $theme, string $title = '', bool $edit = true, bool $delete = true): string
+    public static function createTable(string $dbTable, array $data, string $theme, string $title = '', bool $edit = true, bool $delete = true, $filters = true): string
     {
         $totalCount = count($data);
         $csrfToken = CSRF::create();
@@ -70,18 +70,20 @@ class DataGrid
                     $html .= '<th scope="col" class="' . $thClass . '">Actions</th>';
                 }
             $html .= '</tr>';
-            // Now for the second thead row where the filters will stay
-            $html .= '<tr>';
-                foreach ($totalColumns as $col) {
-                    $html .= '<th scope="col" class="' . $thClass . '"></th>';
-                }
-                if ($delete) {
-                    $html .= '<th scope="col" class="' . $thClass . '"></th>';
-                    $html .= '<th scope="col" class="' . $thClass . '"></th>';
-                } elseif ($edit && !$delete) {
-                    $html .= '<th scope="col" class="' . $thClass . '"></th>';
-                }
-            $html .= '</tr>';
+            if ($filters) {
+                // Now for the second thead row where the filters will stay
+                $html .= '<tr>';
+                    foreach ($totalColumns as $col) {
+                        $html .= '<th scope="col" class="' . $thClass . '"></th>';
+                    }
+                    if ($delete) {
+                        $html .= '<th scope="col" class="' . $thClass . '"></th>';
+                        $html .= '<th scope="col" class="' . $thClass . '"></th>';
+                    } elseif ($edit && !$delete) {
+                        $html .= '<th scope="col" class="' . $thClass . '"></th>';
+                    }
+                $html .= '</tr>';
+            }
         $html .= '</thead>';
         $html .= '<tbody>';
             $counter = 0;
@@ -180,20 +182,27 @@ class DataGrid
         } else {
             $skipColumnArray = '[]';
         }
-
-        $html .= <<<EOL
-            <script nonce="1nL1n3JsRuN1192kwoko2k323WKE">
-            $(document).ready(() => {
-                const table = drawDataGrid('$id');
-                //buildDataGridFilters(table, '$id', $skipColumnArray);
+        if ($filters) {
+            $filterJS = <<<JS
+            buildDataGridFilters(table, '$id', $skipColumnArray);
                 // On every re-draw, rebuild them
                 table.on('draw', () => {
-                    console.log(`redraw occured`);
-                    //buildDataGridFilters(table, '$id', $skipColumnArray);
+                    console.log('redraw occurred');
+                    buildDataGridFilters(table, '$id', $skipColumnArray);
                 });
-            });
-            </script>
-            EOL;
+            JS;
+        } else {
+            $filterJS = '';
+        }
+        $html .= <<<EOL
+        <script nonce="1nL1n3JsRuN1192kwoko2k323WKE">
+        $(document).ready(() => {
+            const table = drawDataGrid('$id');
+            $filterJS
+        });
+        </script>
+        EOL;
+
         // Close all encompassing div
         $html .= '</div>';
         return $html;

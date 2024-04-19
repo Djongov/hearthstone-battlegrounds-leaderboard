@@ -49,7 +49,7 @@ class App
         $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
         switch ($routeInfo[0]) {
             case \FastRoute\Dispatcher::NOT_FOUND:
-                if ($httpMethod === 'GET') {
+                if ($httpMethod === 'GET' && !str_contains($uri, '/api/')) {
                     $loginInfoArray = RequireLogin::check(false);
                     // Theme
                     $theme = (isset($loginInfoArray['usernameArray']['theme'])) ? $loginInfoArray['usernameArray']['theme'] : COLOR_SCHEME;

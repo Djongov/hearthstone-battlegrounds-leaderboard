@@ -19,7 +19,7 @@ define("GENERIC_KEYWORDS", [
 define("GENERIC_DESCRIPTION", "Hearthstone Battlegrounds Leaderboards");
 
 // Logo for the SEO OG tags
-define("OG_LOGO", 'https://' . $_SERVER['HTTP_HOST'] . '/assets/images/BGSingle_Icon.webp');
+define("OG_LOGO", 'https://' . $_SERVER['HTTP_HOST'] . '/assets/images/solo_Icon.webp');
 
 // Used in terms of service
 define("THIRD_PARTY_LIST", []);
@@ -37,7 +37,7 @@ define("COMPANY_ADDRESS", "Sofia, Khan Krum street 13");
 define("COMPANY_URL", "https://sunwellsolutions.com");
 
 // Logo that sits on the menu and the footer
-define("LOGO", '/assets/images/BGSingle_Icon.webp');
+define("LOGO", '/assets/images/solo_Icon.webp');
 
 // Default set of metadata for the site, used in routes.php
 define("DEFAULT_METADATA", [

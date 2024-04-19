@@ -38,7 +38,7 @@ while ($true) {
     $url = $baseApiUrl + $page
 
     # Fetch data from the API endpoint
-    $response = Invoke-RestMethod -Uri $url -Method Get
+    $response = Invoke-RestMethod -Uri $url -Method Get -UserAgent "hearthstone-bg-leaderboard/1.0.0"
 
     Write-Host "Calling API on url $url" -ForegroundColor Yellow
 
