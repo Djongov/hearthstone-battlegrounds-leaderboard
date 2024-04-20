@@ -78,6 +78,10 @@ return function (RouteCollector $router) {
     $router->addRoute('GET', '/api/7/solo/us/get', [$viewsFolder . '/api/battlegrounds/get.php']);
     $router->addRoute('GET', '/api/7/solo/ap/get', [$viewsFolder . '/api/battlegrounds/get.php']);
 
+    $router->addRoute('GET', '/api/7/duos/eu/get', [$viewsFolder . '/api/battlegrounds/get.php']);
+    $router->addRoute('GET', '/api/7/duos/us/get', [$viewsFolder . '/api/battlegrounds/get.php']);
+    $router->addRoute('GET', '/api/7/duos/ap/get', [$viewsFolder . '/api/battlegrounds/get.php']);
+
     // Login page
     $router->addRoute('GET', '/login', [$viewsFolder . '/landing/login.php', $genericMetaDataArray]);
     // Install apge

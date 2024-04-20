@@ -29,11 +29,23 @@ class Record
         $result = $pdo->query($sql);
         return $result->rowCount() > 0;
     }
-    public static function getRecord($table, $accountid) : array
+    public static function getRecordByAccountId($table, $accountid) : array
     {
         $db = new DB();
         $pdo = $db->getConnection();
         $sql = "SELECT * FROM `$table` WHERE `accountid` = '$accountid'";
+        $pdo->query($sql);
+        $result = $pdo->query($sql);
+        if ($result->rowCount() == 0) {
+            return [];
+        }
+        return $result->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public static function getRecordByRank($table, $rank) : array
+    {
+        $db = new DB();
+        $pdo = $db->getConnection();
+        $sql = "SELECT * FROM `$table` WHERE `rank` = $rank";
         $pdo->query($sql);
         $result = $pdo->query($sql);
         if ($result->rowCount() == 0) {
@@ -54,7 +66,7 @@ class Record
     {
         $db = new DB();
         $pdo = $db->getConnection();
-        $currentRecord = self::getRecord($this->table, $this->accountid);
+        $currentRecord = self::getRecordByAccountId($this->table, $this->accountid);
         if ($currentRecord[0]['rating'] == $this->rating && $currentRecord[0]['rank'] == $this->rank) {
             return "Rating and rank for " . $this->accountid . " are the same, no need to update";
         }
@@ -79,7 +91,7 @@ class Record
     }
     public function ratingAndRankAreTheSame() : bool
     {
-        $record = self::getRecord($this->table, $this->accountid);
+        $record = self::getRecordByAccountId($this->table, $this->accountid);
         return $record[0]['rating'] == $this->rating && $record[0]['rank'] == $this->rank;
     }
 }

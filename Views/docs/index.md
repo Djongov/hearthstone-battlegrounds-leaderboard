@@ -2,13 +2,11 @@
 
 # API
 
-We offer an API to get info about an account.
+We offer an API to get info about an account. You can search by accountid or rank.
 
 ## Season 7 (New)
 
 ### Solo
-
-Season 7
 
 Path variables:
 
@@ -18,21 +16,73 @@ Query string
 
 accountid = {name} (case-insensitive, although the official accountids are with first letter capital)
 
+OR
+
+rank = {number} (integer)
+
 ``` http
 GET https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/solo/{region}/get?accountid={name}
 ```
 
-Examples:
+OR
 
-<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/solo/eu/get?accountid=jeef>
+``` http
+GET https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/solo/{region}/get?rank={integer}
+```
 
-<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/solo/us/get?accountid=jeef>
+Examples by accountid:
 
-<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/solo/ap/get?accountid=jeef>
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/solo/eu/get?accountid=QuilboarTTV>
+
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/solo/us/get?accountid=FastEddieHS>
+
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/solo/ap/get?accountid=buhuidatuan>
+
+Examples by rank:
+
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/solo/eu/get?rank=1>
+
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/solo/us/get?rank=1>
+
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/solo/ap/get?rank=1>
 
 ### Duos
 
-Waiting for ranking to come up so we can see the strucutre of the API
+Path variables:
+
+region = eu | us | ap
+
+Query string
+
+accountid = {name} (case-insensitive, although the official accountids are with first letter capital)
+
+OR
+
+rank = {number} (integer)
+
+``` http
+GET https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/duos/{region}/get?accountid={name}
+```
+
+``` http
+GET https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/duos/{region}/get?rank={name}
+```
+
+Examples by accountid:
+
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/duos/eu/get?accountid=DayWeen>
+
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/duos/us/get?accountid=Pocky>
+
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/duos/ap/get?accountid=patience>
+
+Examples by rank:
+
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/duos/eu/get?rank=1>
+
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/duos/us/get?rank=1>
+
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/duos/ap/get?rank=1>
 
 ## Season 6 (last season)
 
