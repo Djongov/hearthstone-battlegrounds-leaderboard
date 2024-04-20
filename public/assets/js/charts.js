@@ -584,3 +584,65 @@ const gauge = (title, parentNodeId, width, height, labels, deita) => {
     // Create the chart
     let gaugeChart = new Chart(canvas, config);
 }
+
+// Bar chart
+const createBarChart = (title, parentDiv, width, height, labels, data) => {
+    console.log(data);
+    let parent = document.getElementById(parentDiv);
+    let containerDiv = document.createElement('div');
+    parent.appendChild(containerDiv);
+    containerDiv.classList.add('w-80', 'overflow-auto', 'm-4');
+    containerDiv.style.height = height;
+    containerDiv.style.width = width;
+    let canvas = document.createElement('canvas');
+    // Canvas id will be derived from the title
+    canvas.id = title.replace(' ', '-');
+    containerDiv.appendChild(canvas);
+
+    const colors = [
+        'rgba(54, 162, 235, 1)', // blue
+        'rgba(75, 192, 192, 1)', // green
+        'rgba(255, 99, 132, 1)', // red
+        'rgba(255, 159, 64, 1)', // orange
+        'rgba(153, 102, 255, 1)', // purple
+        'rgba(255, 206, 86, 1)', // yellow
+        'rgba(255, 0, 0, 1)', // bright red
+        'rgba(0, 255, 255, 1)', // cyan
+        'rgba(255, 0, 255, 1)', // magenta
+        'rgba(128, 128, 128, 1)' // grey
+    ];
+
+    let ctx = canvas.getContext('2d');
+    let myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Players in this rating range',
+                data: data,
+                backgroundColor: colors.slice(0, data.length),
+                borderColor: colors.slice(0, data.length),
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: false,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    display: false,
+                },
+                title: {
+                    display: true,
+                    text: title,
+                },
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+};

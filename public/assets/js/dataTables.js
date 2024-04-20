@@ -3764,7 +3764,7 @@ $jscomp.polyfill(
         // "showing x to x of xxx entries"
         sInfo: "my-6 relative",
         // Holder div for the pagingating numbers
-        sPaging: "cursor-pointer my-6 ",
+        sPaging: "cursor-pointer my-6 overflow-auto ",
         // Div holder that contains the entire "Show XX entries"
         sLength: "mt-6",
         sProcessing: "dataTables_processing",

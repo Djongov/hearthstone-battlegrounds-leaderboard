@@ -192,6 +192,9 @@ if (autoLoadParams.length > 0) {
         if (type === 'linechart') {
             createLineChart(data.title, data.parentDiv, data.width, data.height, data.labels, data.datasets);
         }
+        if (type === 'barchart') {
+            createBarChart(data.title, data.parentDiv, data.width, data.height, data.labels, data.data);
+        }
         if (type === 'table') {
             // Create a table element
             const table = createSkeletonTable();
