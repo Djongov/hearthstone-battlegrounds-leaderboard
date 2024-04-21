@@ -368,6 +368,19 @@ const drawDataGrid = (id) => {
             "targets": "_all",
             "createdCell": function (td, cellData, rowData, row, col) {
                 $(td).addClass('py-4 px-6 border border-slate-400 max-w-md break-words');
+                if (col === 1) {
+                    // We need to fetch the current url and derive the params from it
+                    const url = new URL(window.location.href);
+                    const segments = url.pathname.split('/');
+                    if (segments[0] === '') {
+                        segments.shift();
+                    }
+                    let type = segments[0];
+                    let region = segments[1];
+                    if (type !== "6") {
+                        $(td).html(`<a href="/player/7/${type}/${region}?accountid=${cellData}" class="underline">${cellData}</a>`);
+                    }
+                }
             }
         }],
         initComplete: function () {

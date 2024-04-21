@@ -40,6 +40,28 @@ class DisplayLeaderboard
             $ratingRanges[$rangeKey]++;
         }
 
+        // Now the fastest growing rating player for the last 24 hours
+        $topPlayerQuery = "SELECT `accountid`, MAX(rating) - MIN(rating) AS `rating_difference`
+        FROM `rating_progression`
+        WHERE timestamp >= NOW() - INTERVAL 24 HOUR
+        AND `region` = ?
+        AND `type` = ?
+        AND `season` = ?
+        GROUP BY `accountid`
+        ORDER BY `rating_difference` DESC
+        LIMIT 1;
+        ";
+
+        $db = new \App\Database\DB();
+        $pdo = $db->getConnection();
+        $stmt = $pdo->prepare($topPlayerQuery);
+        $stmt->execute([$region, $type, $season]);
+        $topPlayer = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        $playerLink = '/player/' . $season . '/' . $type . '/' . $region . '/' . $topPlayer['accountid'];
+        
+        $html .= HTML::h3('Fastest growing player in the last 24 hours is ' . HTML::a($topPlayer['accountid'],$playerLink,$theme) . ' with a rating increase of ' . $topPlayer['rating_difference'] . ' rating.', true);
+
         // Autoload the ratingRanges array to a bar chart
         $html .= '<div id="doughnut-limits-holder" class="my-12 flex flex-wrap flex-row justify-center items-center">';
             // initiate an array that will pass the following data into hidden inputs so Javascript can have access to this data on page load and draw the charts
@@ -49,8 +71,8 @@ class DisplayLeaderboard
                     'data' => [
                         'parentDiv' => 'doughnut-limits-holder',
                         'title' => 'Player distribution by rating',
-                        'width' => 400,
-                        'height' => 200,
+                        'width' => 800,
+                        'height' => 400,
                         'labels' => array_keys($ratingRanges),
                         'data' => array_values($ratingRanges)
                     ]

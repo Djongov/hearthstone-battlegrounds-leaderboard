@@ -67,7 +67,7 @@ class Page
     {
         return Footer::render($theme);
     }
-    public function build(string $title, string $description, array $keywords, string $thumbimage, string $theme, array $menuArray, array $usernameArray, string $controlerPath, bool $isAdmin)
+    public function build(string $title, string $description, array $keywords, string $thumbimage, string $theme, array $menuArray, array $usernameArray, string $controlerPath, bool $isAdmin, array $path)
     {
         $html = '';
         $html .= $this->head($title, $description, $keywords, $thumbimage, $theme);

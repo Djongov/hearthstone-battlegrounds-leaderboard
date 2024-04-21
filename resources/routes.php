@@ -29,20 +29,74 @@ return function (RouteCollector $router) {
         ]
     ];
     /* Views */
-
     // Landing
     // Root page
     $router->addRoute('GET', '/', [$viewsFolder . '/landing/main.php', $genericMetaDataArray]);
     $router->addRoute('GET', '/contact', [$viewsFolder . '/landing/contact.php', $genericMetaDataArray]);
+    $router->addRoute('GET', '/player/{season:\d+}/{type}/{region}', [$viewsFolder . '/battlegrounds/player.php', $genericMetaDataArray]);
     // Solo pages
-    $router->addRoute('GET', '/solo/eu', [$viewsFolder . '/battlegrounds/show-leaderboard.php', $genericMetaDataArray]);
-    $router->addRoute('GET', '/solo/us', [$viewsFolder . '/battlegrounds/show-leaderboard.php', $genericMetaDataArray]);
-    $router->addRoute('GET', '/solo/ap', [$viewsFolder . '/battlegrounds/show-leaderboard.php', $genericMetaDataArray]);
+    $router->addRoute('GET', '/solo/eu', [$viewsFolder . '/battlegrounds/show-leaderboard.php', [
+        'metadata' => [
+            // For title we need to extract the page title from the request URI and capitalize the first letter
+            'title' => 'Solo EU Season 7 Leaderboard',
+            'description' => 'Leaderboard for the Solo EU Season 7 Hearthstone Battlegrounds. Find out who is the best player in the EU region is and find yourself in the rankings with our search tool. We also have a rating progression chart for each player.',
+            'keywords' => ['hearthstone battlegrounds', 'leaderboard', 'solo', 'eu', 'season 7', 'rating progression', 'chart'],
+            'thumbimage' => OG_LOGO,
+            'menu' => MAIN_MENU,
+        ]
+    ]]);
+    $router->addRoute('GET', '/solo/us', [$viewsFolder . '/battlegrounds/show-leaderboard.php', [
+        'metadata' => [
+            // For title we need to extract the page title from the request URI and capitalize the first letter
+            'title' => 'Solo US Season 7 Leaderboard',
+            'description' => 'Leaderboard for the Solo US Season 7 Hearthstone Battlegrounds. Find out who is the best player in the US region is and find yourself in the rankings with our search tool. We also have a rating progression chart for each player.',
+            'keywords' => ['hearthstone battlegrounds', 'leaderboard', 'solo', 'us', 'season 7', 'rating progression', 'chart'],
+            'thumbimage' => OG_LOGO,
+            'menu' => MAIN_MENU,
+        ]
+    ]]);
+    $router->addRoute('GET', '/solo/ap', [$viewsFolder . '/battlegrounds/show-leaderboard.php', [
+        'metadata' => [
+            // For title we need to extract the page title from the request URI and capitalize the first letter
+            'title' => 'Solo AP Season 7 Leaderboard',
+            'description' => 'Leaderboard for the Solo Asia-Pacific Season 7 Hearthstone Battlegrounds. Find out who is the best player in the AP region is and find yourself in the rankings with our search tool. We also have a rating progression chart for each player.',
+            'keywords' => ['hearthstone battlegrounds', 'leaderboard', 'solo', 'ap', 'season 7', 'rating progression', 'chart'],
+            'thumbimage' => OG_LOGO,
+            'menu' => MAIN_MENU,
+        ]
+    ]]);
 
     // Duos pages
-    $router->addRoute('GET', '/duos/eu', [$viewsFolder . '/battlegrounds/show-leaderboard.php', $genericMetaDataArray]);
-    $router->addRoute('GET', '/duos/us', [$viewsFolder . '/battlegrounds/show-leaderboard.php', $genericMetaDataArray]);
-    $router->addRoute('GET', '/duos/ap', [$viewsFolder . '/battlegrounds/show-leaderboard.php', $genericMetaDataArray]);
+    $router->addRoute('GET', '/duos/eu', [$viewsFolder . '/battlegrounds/show-leaderboard.php', [
+        'metadata' => [
+            // For title we need to extract the page title from the request URI and capitalize the first letter
+            'title' => 'Duos EU Season 7 Leaderboard',
+            'description' => 'Leaderboard for the Duos EU Season 7 Hearthstone Battlegrounds. Find out who is the best player in the EU region is and find yourself in the rankings with our search tool. We also have a rating progression chart for each player.',
+            'keywords' => ['hearthstone battlegrounds', 'leaderboard', 'duos', 'eu', 'season 7', 'rating progression', 'chart'],
+            'thumbimage' => DUOS_LOGO,
+            'menu' => MAIN_MENU,
+        ]
+    ]]);
+    $router->addRoute('GET', '/duos/us', [$viewsFolder . '/battlegrounds/show-leaderboard.php', [
+        'metadata' => [
+            // For title we need to extract the page title from the request URI and capitalize the first letter
+            'title' => 'Duos US Season 7 Leaderboard',
+            'description' => 'Leaderboard for the Duos US Season 7 Hearthstone Battlegrounds. Find out who is the best player in the US region is and find yourself in the rankings with our search tool. We also have a rating progression chart for each player.',
+            'keywords' => ['hearthstone battlegrounds', 'leaderboard', 'duos', 'us', 'season 7', 'rating progression', 'chart'],
+            'thumbimage' => DUOS_LOGO,
+            'menu' => MAIN_MENU,
+        ]
+    ]]);
+    $router->addRoute('GET', '/duos/ap', [$viewsFolder . '/battlegrounds/show-leaderboard.php', [
+        'metadata' => [
+            // For title we need to extract the page title from the request URI and capitalize the first letter
+            'title' => 'Duos AP Season 7 Leaderboard',
+            'description' => 'Leaderboard for the Duos Asia-Pacific Season 7 Hearthstone Battlegrounds. Find out who is the best player in the AP region is and find yourself in the rankings with our search tool. We also have a rating progression chart for each player.',
+            'keywords' => ['hearthstone battlegrounds', 'leaderboard', 'duos', 'ap', 'season 7', 'rating progression', 'chart'],
+            'thumbimage' => DUOS_LOGO,
+            'menu' => MAIN_MENU,
+        ]
+    ]]);
 
     $router->addRoute('GET', '/6/eu', [$viewsFolder . '/battlegrounds/show-leaderboard.php', $genericMetaDataArray]);
     $router->addRoute('GET', '/6/us', [$viewsFolder . '/battlegrounds/show-leaderboard.php', $genericMetaDataArray]);

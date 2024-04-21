@@ -1,7 +1,6 @@
 <?php
 
 namespace Components;
-
 class ErrorPageHandler
 {
     public static function render($code, $title, $message, $theme)

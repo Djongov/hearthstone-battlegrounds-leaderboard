@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Models\Api;
 
 use App\Database\DB;
+use Google\Service\Transcoder\Progress;
+use Models\ProgressionRank;
+use Models\ProgressionRating;
 
 class Record
 {
@@ -73,6 +76,13 @@ class Record
         $query = "UPDATE `$this->table` SET `rating` = $this->rating, `rank` = $this->rank WHERE `accountid` = '$this->accountid'";
         $update = $pdo->query($query);
         if ($update->rowCount() > 0) {
+            // We need to derive the region and type from the table name
+            $table = explode('_', $this->table);
+            $season = (int) $table[2];
+            $region = $table[3];
+            $type = $table[4];
+            ProgressionRank::add($this->accountid, $region, $type, $this->rank, $season);
+            ProgressionRating::add($this->accountid, $region, $type, $this->rating, $season);
             return "Record updated successfully for " . $this->accountid . ' with new rating ' . $this->rating . " and rank " . $this->rank . ". Was " . $currentRecord[0]['rating'] . " and rank " . $currentRecord[0]['rank'];
         } else {
             return "Nothing to update for " . $this->accountid . " with rating " . $this->rating . " and rank " . $this->rank;

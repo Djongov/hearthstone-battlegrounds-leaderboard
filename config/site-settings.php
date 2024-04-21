@@ -1,6 +1,6 @@
 <?php
 // set the display errors to 1
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 
 /*
 
@@ -14,9 +14,21 @@ define("SITE_TITLE", "Hearthstone Battlegrounds Leaderboards");
 // Key words for SEO
 define("GENERIC_KEYWORDS", [
     SITE_TITLE,
+    "Hearthstone",
+    "Battlegrounds",
+    "Leaderboards",
+    "Leaderboard",
+    "Hearthstone Battlegrounds",
+    "Hearthstone Leaderboards",
+    "Hearthstone Battlegrounds Leaderboards",
+    "Hearthstone Battlegrounds Leaderboard",
+    "Season 6",
+    "Season 7",
 ]);
 // Site description for SEO
-define("GENERIC_DESCRIPTION", "Hearthstone Battlegrounds Leaderboards");
+define("GENERIC_DESCRIPTION", "Hearthstone Battlegrounds Leaderboards. Leaderboards for the popular Hearthstone game mode. Season 6 and Season 7 leaderboards with search functionality, graphs, charts, progression, and more.");
+
+define("DUOS_LOGO", "https://" . $_SERVER['HTTP_HOST'] . "/assets/images/duos_Icon.webp");
 
 // Logo for the SEO OG tags
 define("OG_LOGO", 'https://' . $_SERVER['HTTP_HOST'] . '/assets/images/solo_Icon.webp');

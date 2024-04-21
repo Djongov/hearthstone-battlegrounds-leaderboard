@@ -190,7 +190,7 @@ if (autoLoadParams.length > 0) {
             createPieChart(data.title, data.parentDiv, data.width, data.title, data.height, data.labels, data.data);
         }
         if (type === 'linechart') {
-            createLineChart(data.title, data.parentDiv, data.width, data.height, data.labels, data.datasets);
+            createLineChart(data.title, data.parentDiv, data.width, data.height, data.labels, data.datasets, data.options);
         }
         if (type === 'barchart') {
             createBarChart(data.title, data.parentDiv, data.width, data.height, data.labels, data.data);

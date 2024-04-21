@@ -1,7 +1,6 @@
 <?php
 define("START_TIME", microtime(true));
-// Load the autoloaders, local and composer
-//require_once dirname($_SERVER['DOCUMENT_ROOT']) . '/resources/autoload.php';
+// Load the autoloader
 require_once dirname($_SERVER['DOCUMENT_ROOT']) . '/vendor/autoload.php';
 
 function dd()

@@ -28,7 +28,8 @@ class RequireLogin
             '/docs',
             '/docs/*',
             '/login',
-            '/contact'
+            '/contact',
+            '/player/*'
         ];
         
         $loggedIn = false;

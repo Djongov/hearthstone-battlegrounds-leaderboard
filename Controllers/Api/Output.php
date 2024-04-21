@@ -20,7 +20,7 @@ class Output
                 'serverResponseTimeMs' => self::responseTime(),
                 'data' => $data
             ],
-            JSON_PRETTY_PRINT
+            JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE
         );
     }
     // This method terminates the script after sending the response
@@ -38,7 +38,7 @@ class Output
                 'serverResponseTimeMs' => self::responseTime(),
                 'data' => $data
             ],
-            JSON_PRETTY_PRINT
+            JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE
         );
         exit();
     }

@@ -22,7 +22,6 @@ class App
         if (!isset($_SESSION['nonce'])) {
             $_SESSION['nonce'] = General::randomString(24);
         }
-
         // Now that we've loaded the env, let's get the site settings
         require_once dirname($_SERVER['DOCUMENT_ROOT']) . '/config/site-settings.php';
         /*
@@ -35,17 +34,13 @@ class App
             throw new \RuntimeException('Invalid routes definition');
         }
         $dispatcher = \FastRoute\simpleDispatcher($routesDefinition);
-
         // Fetch method and URI from somewhere
         $httpMethod = $_SERVER['REQUEST_METHOD'];
         $uri = $_SERVER['REQUEST_URI'];
-
         // Strip query string (?foo=bar) and decode URI
         if ($pos = strpos($uri, '?')) {
             $uri = substr($uri, 0, $pos);
         }
-        $uri = rawurldecode($uri);
-
         $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
         switch ($routeInfo[0]) {
             case \FastRoute\Dispatcher::NOT_FOUND:
@@ -63,7 +58,8 @@ class App
                         MAIN_MENU, // Menu
                         $loginInfoArray['usernameArray'], // Username array
                         dirname($_SERVER['DOCUMENT_ROOT']) . '/Views/errors/error.php', // Controller
-                        $loginInfoArray['isAdmin'] // isAdmin
+                        $loginInfoArray['isAdmin'], // isAdmin
+                        $routeInfo[2] ?? [] // Path info
                     );
                 } else {
                     // For non-GET requests, provide an API response
@@ -111,7 +107,7 @@ class App
                                 // echo '</div>';
                                 // echo '</body>';
                                 $page = new Page();
-                                echo $page->build($params['title'], $params['description'], $params['keywords'], $params['thumbimage'], $theme, $menuArray, $usernameArray, $controllerName, $isAdmin);
+                                echo $page->build($params['title'], $params['description'], $params['keywords'], $params['thumbimage'], $theme, $menuArray, $usernameArray, $controllerName, $isAdmin, $routeInfo[2] ?? []);
                             } else {
                                 include_once $controllerName;
                             }

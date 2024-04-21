@@ -6,6 +6,7 @@ namespace Models;
 
 use Controllers\Api\Checks;
 use Controllers\Api\Output;
+use Google\Service\Transcoder\Progress;
 use Models\Api\Record;
 
 $checks = new Checks($vars, $_POST);

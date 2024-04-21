@@ -193,14 +193,49 @@ const createPieChart = (name, parentNodeId, canvasId, containerHeight, container
 
 // Line chart
 
-const createLineChart = (title, parentDiv, width, height, labels, data) => {
+const createLineChart = (title, parentDiv, width, height, labels, data, options = {
+    responsive : true,
+    maintainAspectRatio : false,
+    plugins: {
+        legend: {
+            position: 'top',
+        },
+        title: {
+            display: true,
+            text: title,
+        },
+    },
+    scales: {
+        x: {
+            display: true,
+            title: {
+                display: false,
+                text: 'Timestamp',
+            },
+        },
+        y: {
+            display: true,
+            title: {
+                display: true,
+                text: title.split(' ')[1],
+            },
+            reverse: false,
+            stepSize: 1,
+            ticks: {
+                function(value, index, values) {
+                    return Math.floor(value);
+                }
+            },
+        },
+    }
+
+}) => {
     let parent = document.getElementById(parentDiv);
     let containerDiv = document.createElement('div');
     parent.appendChild(containerDiv);
-    containerDiv.classList.add('w-80');
-    containerDiv.style.height = height;
-    containerDiv.style.width = width;
+    containerDiv.classList.add('w-80', 'overflow-auto', 'm-4', 'h-96');
     let canvas = document.createElement('canvas');
+    canvas.id = title.replace(' ', '-');
     containerDiv.appendChild(canvas);
 
     let lineDataSets = [];
@@ -234,27 +269,24 @@ const createLineChart = (title, parentDiv, width, height, labels, data) => {
         });
     });
 
-    new Chart(canvas, {
+    let chart = new Chart(canvas, {
         type: 'line',
         data: {
             datasets: lineDataSets,
             labels: labels,
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: title,
-                },
-            },
-        }
+        options: options,
     });
-
+    if (title.split(' ')[1] === 'rank') {
+        chart.options.scales.y.ticks = {
+            function(value, index, values) {
+                return Math.floor(value);
+            }
+        }
+        chart.options.scales.y.stepSize = 1;
+        chart.options.scales.y.reverse = true;
+    }
+    return chart;
 }
 
 const doughnutChart = (name, parentNodeId, height, width, labels, data) => {
@@ -590,10 +622,10 @@ const createBarChart = (title, parentDiv, width, height, labels, data) => {
     console.log(data);
     let parent = document.getElementById(parentDiv);
     let containerDiv = document.createElement('div');
-    parent.appendChild(containerDiv);
-    containerDiv.classList.add('w-80', 'overflow-auto', 'm-4');
-    containerDiv.style.height = height;
     containerDiv.style.width = width;
+    containerDiv.style.height = height;
+    parent.appendChild(containerDiv);
+    containerDiv.classList.add('w-80', 'overflow-auto', 'm-4', 'h-96');
     let canvas = document.createElement('canvas');
     // Canvas id will be derived from the title
     canvas.id = title.replace(' ', '-');
@@ -626,8 +658,8 @@ const createBarChart = (title, parentDiv, width, height, labels, data) => {
             }]
         },
         options: {
-            responsive: false,
-            maintainAspectRatio: true,
+            responsive: true,
+            maintainAspectRatio: false,
             plugins: {
                 legend: {
                     position: 'top',
