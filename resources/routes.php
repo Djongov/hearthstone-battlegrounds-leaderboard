@@ -33,7 +33,15 @@ return function (RouteCollector $router) {
     // Root page
     $router->addRoute('GET', '/', [$viewsFolder . '/landing/main.php', $genericMetaDataArray]);
     $router->addRoute('GET', '/contact', [$viewsFolder . '/landing/contact.php', $genericMetaDataArray]);
-    $router->addRoute('GET', '/player/{season:\d+}/{type}/{region}', [$viewsFolder . '/battlegrounds/player.php', $genericMetaDataArray]);
+    $router->addRoute('GET', '/player/{season:\d+}/{type}/{region}', [$viewsFolder . '/battlegrounds/player.php', [
+        'metadata' => [
+            'title' => explode('=', $title)[1],
+            'description' => explode('=', $title)[1] . ' page for the Hearthstone Battlegrounds. Find out the rating progression and rank progression for a player in a specific season, region and type.',
+            'keywords' => ['hearthstone battlegrounds', explode('=', $title)[1], 'rating progression', 'rank progression', 'season', 'region', 'type'],
+            'thumbimage' => OG_LOGO,
+            'menu' => MAIN_MENU,
+        ]
+    ]]);
     // Solo pages
     $router->addRoute('GET', '/solo/eu', [$viewsFolder . '/battlegrounds/show-leaderboard.php', [
         'metadata' => [
