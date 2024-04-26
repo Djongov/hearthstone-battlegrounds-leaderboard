@@ -82,12 +82,12 @@ class Record
             $region = $table[3];
             $type = $table[4];
             // Only update progression tables if the rating or rank has changed
-            //if ($currentRecord[0]['rating'] != $this->rating) {
+            if ($currentRecord[0]['rating'] != $this->rating) {
                 ProgressionRank::add($this->accountid, $region, $type, $this->rank, $season);
-            //}
-            //if ($currentRecord[0]['rank'] != $this->rank) {
+            }
+            if ($currentRecord[0]['rank'] != $this->rank) {
                 ProgressionRating::add($this->accountid, $region, $type, $this->rating, $season);
-            //}
+            }
             return "Record updated successfully for " . $this->accountid . ' with new rating ' . $this->rating . " and rank " . $this->rank . ". Was " . $currentRecord[0]['rating'] . " and rank " . $currentRecord[0]['rank'];
         } else {
             return "Nothing to update for " . $this->accountid . " with rating " . $this->rating . " and rank " . $this->rank;

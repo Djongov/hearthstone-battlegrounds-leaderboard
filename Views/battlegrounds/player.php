@@ -19,23 +19,28 @@ $db = new DB();
 
 $pdo = $db->getConnection();
 
+
 /* Rating progression */
 
-$queryRating = "SELECT * FROM `rating_progression` WHERE `accountid` = ? AND `region` = ? AND `type` = ? AND `season` = ?";
+$ratingTable = 'rating_progression_season_' . $path['season'] . '_' . $path['region'] . '_' . $path['type'];
 
+$queryRating = "SELECT * FROM `$ratingTable` WHERE `accountid` = ?";
 $stmtRating = $pdo->prepare($queryRating);
 
-$stmtRating->execute([$_GET['accountid'], $path['region'], $path['type'], $path['season']]);
+$stmtRating->execute([$_GET['accountid']]);
 
 $ratingData = $stmtRating->fetchAll(\PDO::FETCH_ASSOC);
 
+
 /* Rank progression */
 
-$queryRank = "SELECT * FROM `rank_progression` WHERE `accountid` = ? AND `region` = ? AND `type` = ? AND `season` = ?";
+$rankTable = 'rank_progression_season_' . $path['season'] . '_' . $path['region'] . '_' . $path['type'];
+
+$queryRank = "SELECT * FROM `$rankTable` WHERE `accountid` = ?";
 
 $stmtRank = $pdo->prepare($queryRank);
 
-$stmtRank->execute([$_GET['accountid'], $path['region'], $path['type'], $path['season']]);
+$stmtRank->execute([$_GET['accountid']]);
 
 $rankData = $stmtRank->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -98,20 +103,9 @@ if (!empty($rankData)) {
 //$last5Games = array_slice($ratingData, -6, 6, true);
 $last5GamesQuery = "SELECT accountid, timestamp, rating
 FROM (
-    SELECT *,
-           (SELECT rating
-            FROM rating_progression AS rp2 
-            WHERE rp2.accountid = rp1.accountid 
-              AND rp2.timestamp < rp1.timestamp 
-              AND rp2.season = 7
-              AND rp2.type = ?
-            ORDER BY rp2.timestamp DESC
-            LIMIT 1) AS prev_rating
-    FROM rating_progression AS rp1
+    SELECT *, LAG(rating) OVER (PARTITION BY accountid ORDER BY timestamp DESC) AS prev_rating
+    FROM $ratingTable
     WHERE accountid = ?
-      AND season = ?
-      AND type = ?
-      AND region = ?
 ) AS subquery
 WHERE rating != prev_rating OR prev_rating IS NULL
 ORDER BY timestamp DESC
@@ -120,9 +114,10 @@ LIMIT 6;
 
 $stmt = $pdo->prepare($last5GamesQuery);
 
-$stmt->execute([$path['type'], $_GET['accountid'], $path['season'], $path['type'], $path['region']]);
+$stmt->execute([$_GET['accountid']]);
 
 $last5Games = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
 // Let's display a small table with the rating and the difference between the last entry
 if ($last5Games) {
     echo HTML::h4('Last 5 games', true);
@@ -164,24 +159,22 @@ if ($last5Games) {
 
 echo HTML::h4('Last 24 hours performance', true);
 
-$last24HoursQuery = "SELECT 
+$last24HoursQuery = "SELECT
     SUM(CASE WHEN rating_change > 0 THEN rating_change ELSE 0 END) AS rating_gained,
     SUM(CASE WHEN rating_change < 0 THEN -rating_change ELSE 0 END) AS rating_lost
 FROM (
-    SELECT 
+    SELECT
         MAX(rating) - MIN(rating) AS rating_change
-    FROM rating_progression
+    FROM $ratingTable
     WHERE accountid = ?
       AND timestamp >= NOW() - INTERVAL 24 HOUR
-      AND season = ?
-      AND type = ?
     GROUP BY DATE(timestamp) -- Grouping by date instead of game_id
 ) AS rating_changes;
 ";
 
 $stmt = $pdo->prepare($last24HoursQuery);
 
-$stmt->execute([$_GET['accountid'], $path['season'], $path['type']]);
+$stmt->execute([$_GET['accountid']]);
 
 $last24Hours = $stmt->fetch(\PDO::FETCH_ASSOC);
 
@@ -223,8 +216,6 @@ if (!$ratingData) {
     ];
     array_push($chartsArray, $chartRatingAutoloadData);
 }
-
-
 
 // Let's prepare the line chart data. timestamp key in ratinData will be the x-axis and rating will be the y-axis
 

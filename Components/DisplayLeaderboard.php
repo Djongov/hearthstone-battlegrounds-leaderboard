@@ -39,7 +39,7 @@ class DisplayLeaderboard
             }
             $ratingRanges[$rangeKey]++;
         }
-
+        
         // Now the fastest growing rating player for the last 24 hours
         $topPlayerQuery = "SELECT `accountid`, MAX(rating) - MIN(rating) AS `rating_difference`
         FROM `rating_progression`

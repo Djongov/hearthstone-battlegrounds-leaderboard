@@ -7,7 +7,7 @@ return function (RouteCollector $router) {
     $viewsFolder = dirname($_SERVER['DOCUMENT_ROOT']) . '/Views';
     // include the menu data
     require_once dirname($_SERVER['DOCUMENT_ROOT']) . '/resources/menus/menus.php';
-    $title = ucfirst(str_replace('-', ' ', basename($_SERVER['REQUEST_URI'])));
+    $title = urldecode(ucfirst(str_replace('-', ' ', basename($_SERVER['REQUEST_URI']))));
 
     $genericMetaDataArray = [
         'metadata' => [
@@ -35,9 +35,9 @@ return function (RouteCollector $router) {
     $router->addRoute('GET', '/contact', [$viewsFolder . '/landing/contact.php', $genericMetaDataArray]);
     $router->addRoute('GET', '/player/{season:\d+}/{type}/{region}', [$viewsFolder . '/battlegrounds/player.php', [
         'metadata' => [
-            'title' => explode('=', $title)[1],
-            'description' => explode('=', $title)[1] . ' page for the Hearthstone Battlegrounds. Find out the rating progression and rank progression for a player in a specific season, region and type.',
-            'keywords' => ['hearthstone battlegrounds', explode('=', $title)[1], 'rating progression', 'rank progression', 'season', 'region', 'type'],
+            'title' => explode('=', $title)[1] ?? 'Player',
+            'description' => explode('=', $title)[1] ?? 'Player' . ' page for the Hearthstone Battlegrounds. Find out the rating progression and rank progression for a player in a specific season, region and type.',
+            'keywords' => ['hearthstone battlegrounds', explode('=', $title)[1] ?? 'Player', 'rating progression', 'rank progression', 'season', 'region', 'type'],
             'thumbimage' => OG_LOGO,
             'menu' => MAIN_MENU,
         ]
