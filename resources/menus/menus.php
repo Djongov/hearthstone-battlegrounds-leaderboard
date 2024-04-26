@@ -50,6 +50,9 @@ define("ADMIN_MENU", [
             ]
         ]
     ],
+    'Record Output' => [
+        'link' => '/adminx/record-output',
+    ],
 ]);
 
 /* Menu Settings */

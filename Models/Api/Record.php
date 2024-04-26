@@ -73,21 +73,34 @@ class Record
         if ($currentRecord[0]['rating'] == $this->rating && $currentRecord[0]['rank'] == $this->rank) {
             return "Rating and rank for " . $this->accountid . " are the same, no need to update";
         }
+        
+        $table = explode('_', $this->table);
+        $season = (int) $table[2];
+        $region = $table[3];
+        $type = $table[4];
+        // See errors when i update the record with a huge difference in rating and rank. I need to prevent this and get warned when it attempts to happen
+        if ($currentRecord[0]['rating'] - $this->rating > 450 || $this->rating - $currentRecord[0]['rating'] > 450) {
+            $message = "Rating difference is too high for " . $this->accountid . ". Current rating is " . $currentRecord[0]['rating'] . " and new rating is " . $this->rating . ". Region is " . $region . " and type is " . $type . ". In table " . $this->table . ".";
+            $to = [
+                [
+                    'email' => 'djongov@gamerz-bg.com',
+                    'name' => 'Dimitar Dzhongov'
+                ]
+            ];
+            \App\Mail\Send::send($to, 'Rating difference is too high', $message);
+            return $message;
+        }
         $query = "UPDATE `$this->table` SET `rating` = $this->rating, `rank` = $this->rank WHERE `accountid` = '$this->accountid'";
         $update = $pdo->query($query);
         if ($update->rowCount() > 0) {
             // We need to derive the region and type from the table name
-            $table = explode('_', $this->table);
-            $season = (int) $table[2];
-            $region = $table[3];
-            $type = $table[4];
             // Only update progression tables if the rating or rank has changed
-            if ($currentRecord[0]['rating'] != $this->rating) {
+            //if ($currentRecord[0]['rating'] != $this->rating) {
                 ProgressionRank::add($this->accountid, $region, $type, $this->rank, $season);
-            }
-            if ($currentRecord[0]['rank'] != $this->rank) {
+            //}
+            //if ($currentRecord[0]['rank'] != $this->rank) {
                 ProgressionRating::add($this->accountid, $region, $type, $this->rating, $season);
-            }
+            //}
             return "Record updated successfully for " . $this->accountid . ' with new rating ' . $this->rating . " and rank " . $this->rank . ". Was " . $currentRecord[0]['rating'] . " and rank " . $currentRecord[0]['rank'];
         } else {
             return "Nothing to update for " . $this->accountid . " with rating " . $this->rating . " and rank " . $this->rank;
@@ -103,10 +116,5 @@ class Record
         } else {
             return "Did not delete record for " . $this->accountid;
         }
-    }
-    public function ratingAndRankAreTheSame() : bool
-    {
-        $record = self::getRecordByAccountId($this->table, $this->accountid);
-        return $record[0]['rating'] == $this->rating && $record[0]['rank'] == $this->rank;
     }
 }

@@ -46,6 +46,14 @@ $rankData = $stmtRank->fetchAll(\PDO::FETCH_ASSOC);
 
 echo HTML::h3('Data for ' . $_GET['accountid'] . ' for ' . $path['region'] . ' ' . $path['type'] . ' season ' . $path['season'], true);
 
+// Let's show current rank and rating
+$currentRank = $rankData ? end($rankData)['rank'] : 'N/A';
+echo HTML::h4('Current rank - ' . $currentRank, true);
+
+$currentRating = $ratingData ? end($ratingData)['rating'] : 'N/A';
+
+echo HTML::h4('Current MMR - ' . $currentRating, true);
+
 // Let's get the lowest rank attained and at what timestamp
 $lowestRank = 0;
 $lowestRankTimestamp = 0;
@@ -99,6 +107,8 @@ if (!empty($rankData)) {
     echo Alerts::danger("No rank data available.");
 }
 
+$lastGamesNumber = 10;
+$lastGamesNumberQuery = $lastGamesNumber + 1;
 // Last 5 games
 //$last5Games = array_slice($ratingData, -6, 6, true);
 $last5GamesQuery = "SELECT accountid, timestamp, rating
@@ -109,7 +119,7 @@ FROM (
 ) AS subquery
 WHERE rating != prev_rating OR prev_rating IS NULL
 ORDER BY timestamp DESC
-LIMIT 6;
+LIMIT $lastGamesNumberQuery;
 ";
 
 $stmt = $pdo->prepare($last5GamesQuery);
@@ -120,7 +130,7 @@ $last5Games = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
 // Let's display a small table with the rating and the difference between the last entry
 if ($last5Games) {
-    echo HTML::h4('Last 5 games', true);
+    echo HTML::h4('Last ' . $lastGamesNumber . ' games', true);
     echo '<table class="mx-auto my-4 table-auto w-max-sm border boreder-black dark:border-gray-400 text-center bg-gray-100 dark:bg-gray-900">';
         echo '<thead>';
             echo '<tr>';

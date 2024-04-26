@@ -144,6 +144,9 @@ return function (RouteCollector $router) {
     $router->addRoute('GET', '/api/7/duos/us/get', [$viewsFolder . '/api/battlegrounds/get.php']);
     $router->addRoute('GET', '/api/7/duos/ap/get', [$viewsFolder . '/api/battlegrounds/get.php']);
 
+    // Event collect
+    $router->addRoute('POST', '/api/event-collect', [$viewsFolder . '/api/battlegrounds/event-collect.php']);
+
     // Login page
     $router->addRoute('GET', '/login', [$viewsFolder . '/landing/login.php', $genericMetaDataArray]);
     // Install apge
@@ -177,6 +180,7 @@ return function (RouteCollector $router) {
     $router->addRoute('GET', '/adminx/queries', [$viewsFolder . '/admin/queries.php', $genericMetaAdminDataArray]);
     $router->addRoute('GET', '/adminx/mailer', [$viewsFolder . '/admin/mailer.php', $genericMetaAdminDataArray]);
     $router->addRoute('GET', '/adminx/base64', [$viewsFolder . '/admin/tools/base64encode.php', $genericMetaAdminDataArray]);
+    $router->addRoute('GET', '/adminx/record-output', [$viewsFolder . '/admin/record-output.php', $genericMetaAdminDataArray]);
 
     // Admin API
     $router->addRoute('POST', '/api/admin/csp/add', [$viewsFolder . '/api/admin/csp/add.php']);

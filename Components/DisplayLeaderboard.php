@@ -39,14 +39,12 @@ class DisplayLeaderboard
             }
             $ratingRanges[$rangeKey]++;
         }
-        
+
+        $ratingTable = 'rating_progression_season_' . $season . '_' . $region . '_' . $type;
         // Now the fastest growing rating player for the last 24 hours
         $topPlayerQuery = "SELECT `accountid`, MAX(rating) - MIN(rating) AS `rating_difference`
-        FROM `rating_progression`
+        FROM `$ratingTable`
         WHERE timestamp >= NOW() - INTERVAL 24 HOUR
-        AND `region` = ?
-        AND `type` = ?
-        AND `season` = ?
         GROUP BY `accountid`
         ORDER BY `rating_difference` DESC
         LIMIT 1;
@@ -55,7 +53,7 @@ class DisplayLeaderboard
         $db = new \App\Database\DB();
         $pdo = $db->getConnection();
         $stmt = $pdo->prepare($topPlayerQuery);
-        $stmt->execute([$region, $type, $season]);
+        $stmt->execute();
         $topPlayer = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         $playerLink = '/player/' . $season . '/' . $type . '/' . $region . '?accountid=' . $topPlayer['accountid'];
