@@ -149,18 +149,72 @@ if ($last5Games) {
                     continue;
                 }
                 $difference = $lastRating - $rating;
+
                 // Let's color the difference, if negative, red bold, if positive, green bold
                 $color = $difference < 0 ? 'text-red-500' : 'text-green-500';
-                    echo '<tr>';
-                        echo '<td class="border px-4 py-2">' . $rating . '</td>';
-                        echo '<td class="border px-4 py-2 ' . $color . '">' . $difference . '</td>';
-                        echo '<td class="border px-4 py-2">' . $timestamp . '</td>';
-                    echo '</tr>';
+                // Let's try to predict placement
+                $placement = 0;
+                // Define the mapping between difference ranges and placement values
+                $map = [
+                    [-200, -80, 8],
+                    [-80, -65, 7],
+                    [-65, -50, 6],
+                    [-50, -20, 5],
+                    [-20, 11, 4],
+                    [11, 44, 3],
+                    [44, 64, 2],
+                    [64, PHP_INT_MAX, 1] // PHP_INT_MAX represents infinity
+                ];
+
+                $highMMRMap = [
+                    [-200, -100, 8],
+                    [-100, -80, 7],
+                    [-80, -60, 6],
+                    [-60, -10, 5],
+                    [-10, 3, 4],
+                    [3, 31, 3],
+                    [31, 55, 2],
+                    [55, PHP_INT_MAX, 1] // PHP_INT_MAX represents infinity
+                ];
+
+                // Iterate over the map to find the appropriate placement
+                $chosenMap = $rating > 13000 ? $highMMRMap : $map;
+
+                foreach ($chosenMap as $item) {
+                    $min = $item[0];
+                    $max = $item[1];
+                    $placementValue = $item[2];
+
+                    if ($difference > $min && $difference <= $max) {
+                        $placement = $placementValue;
+                        break;
+                    }
+                }
+
+                $placementString = '';
+
+                if ($placement === 1) {
+                    $placementString = '1st';
+                } elseif ($placement === 2) {
+                    $placementString = '2nd';
+                } elseif ($placement === 3) {
+                    $placementString = '3rd';
+                } elseif ($placement > 3) {
+                    $placementString = $placement . 'th';
+                }
+
+                echo '<tr>';
+                    echo '<td class="border px-4 py-2">' . $rating . '</td>';
+                    echo '<td class="border px-4 py-2 ' . $color . '">' . $difference . ' (' . $placementString . '*)</td>';
+                    echo '<td class="border px-4 py-2">' . $timestamp . '</td>';
+                echo '</tr>';
                 
                 $lastRating = $rating;
             }
         echo '</tbody>';
     echo '</table>';
+    echo HTML::p('* - possible placement, but will not be always accurate', ['text-center', 'my-4']);
+    echo HTML::P('The above table will not show games resulting in 0 rating because of the way data is pulled', ['text-center', 'my-4']);
 } else {
     echo Alerts::danger('No rating data found');
 }

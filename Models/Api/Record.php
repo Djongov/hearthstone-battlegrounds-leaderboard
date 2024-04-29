@@ -87,7 +87,7 @@ class Record
                     'name' => 'Dimitar Dzhongov'
                 ]
             ];
-            \App\Mail\Send::send($to, 'Rating difference is too high', $message);
+            //\App\Mail\Send::send($to, 'Rating difference is too high', $message);
             return $message;
         }
         $query = "UPDATE `$this->table` SET `rating` = $this->rating, `rank` = $this->rank WHERE `accountid` = '$this->accountid'";

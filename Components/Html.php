@@ -2,8 +2,6 @@
 
 namespace Components;
 
-use GuzzleHttp\RetryMiddleware;
-
 class Html
 {
     public static function h1($text, $center = false, $classes = [])
@@ -35,9 +33,9 @@ class Html
             array_push($classes, 'text-center');
         }
         if (empty($classes)) {
-            return '<h3 class="mx-2 my-2 text-xl font-bold dark:text-white break-all">' . $text . '</h3>';
+            return '<h3 class="mx-2 my-2 text-xl font-bold dark:text-white break-words">' . $text . '</h3>';
         } else {
-            return '<h3 class="mx-2 my-2 text-xl font-bold dark:text-white break-all ' . implode(' ', $classes) . '">' . $text . '</h3>';
+            return '<h3 class="mx-2 my-2 text-xl font-bold dark:text-white break-words ' . implode(' ', $classes) . '">' . $text . '</h3>';
         }
     }
     public static function h4($text, $center = false, $classes = [])
@@ -48,7 +46,7 @@ class Html
             } else {
                 $class = '';
             }
-            return '<h4 class="mx-2 my-2 text-md font-bold dark:text-white' . $class . '">' . $text . '</h4>';
+            return '<h4 class="mx-2 my-2 text-md font-bold dark:text-white break-words' . $class . '">' . $text . '</h4>';
         } else {
             return '<h4 class="' . $classes . '">' . $text . '</h4>';
         }
