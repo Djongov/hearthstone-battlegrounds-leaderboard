@@ -106,9 +106,9 @@ return function (RouteCollector $router) {
         ]
     ]]);
 
-    $router->addRoute('GET', '/6/eu', [$viewsFolder . '/battlegrounds/show-leaderboard.php', $genericMetaDataArray]);
-    $router->addRoute('GET', '/6/us', [$viewsFolder . '/battlegrounds/show-leaderboard.php', $genericMetaDataArray]);
-    $router->addRoute('GET', '/6/ap', [$viewsFolder . '/battlegrounds/show-leaderboard.php', $genericMetaDataArray]);
+    $router->addRoute('GET', '/6/eu', [$viewsFolder . '/battlegrounds/show-leaderboard-old.php', $genericMetaDataArray]);
+    $router->addRoute('GET', '/6/us', [$viewsFolder . '/battlegrounds/show-leaderboard-old.php', $genericMetaDataArray]);
+    $router->addRoute('GET', '/6/ap', [$viewsFolder . '/battlegrounds/show-leaderboard-old.php', $genericMetaDataArray]);
 
     // HS Api Routes
     $router->addRoute('POST', '/api/eu/6/record', [$viewsFolder . '/api/eu/6/record.php']);
