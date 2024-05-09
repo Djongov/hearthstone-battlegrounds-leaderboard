@@ -90,6 +90,9 @@ define("MAIN_MENU", [
             ],
             'Asia-Pacific' => [
                 'sub_link' => '/solo/ap'
+            ],
+            'Combined' => [
+                'sub_link' => '/solo/combined-leaderboard'
             ]
         ]
     ],
@@ -103,6 +106,9 @@ define("MAIN_MENU", [
             ],
             'Asia-Pacific' => [
                 'sub_link' => '/duos/ap'
+            ],
+            'Combined' => [
+                'sub_link' => '/duos/combined-leaderboard'
             ]
         ]
     ],

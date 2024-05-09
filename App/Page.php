@@ -72,7 +72,7 @@ class Page
         $html = '';
         $html .= $this->head($title, $description, $keywords, $thumbimage, $theme);
         $html .= '<body class="h-full antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-400">';
-            $html .= '<div class="md:mx-auto bg-gray-200 dark:bg-gray-800">';
+            $html .= '<div class="md:mx-auto bg-orange-200 dark:bg-gray-800">';
                 $html .= $this->header($usernameArray, $menuArray, $isAdmin, $theme);
                 if (SHOW_LOADING_SCREEN) {
                     $html .= '<div id="loading-screen" class="w-fit mx-auto my-12 flex items-center border border-black dark:border-gray-400 bg-white dark:bg-gray-700 p-8 rounded z-99999"><div class="animate-spin border-t-4 border-' . $theme . '-500 border-solid rounded-full h-16 w-16"></div>

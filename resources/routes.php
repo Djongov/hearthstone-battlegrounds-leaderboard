@@ -33,6 +33,10 @@ return function (RouteCollector $router) {
     // Root page
     $router->addRoute('GET', '/', [$viewsFolder . '/landing/main.php', $genericMetaDataArray]);
     $router->addRoute('GET', '/contact', [$viewsFolder . '/landing/contact.php', $genericMetaDataArray]);
+
+    $router->addRoute('GET', '/solo/combined-leaderboard', [$viewsFolder . '/battlegrounds/combined-solo.php', $genericMetaDataArray]);
+    $router->addRoute('GET', '/duos/combined-leaderboard', [$viewsFolder . '/battlegrounds/combined-duos.php', $genericMetaDataArray]);
+
     $router->addRoute('GET', '/player/{season:\d+}/{type}/{region}', [$viewsFolder . '/battlegrounds/player.php', [
         'metadata' => [
             'title' => explode('=', $title)[1] ?? 'Player',

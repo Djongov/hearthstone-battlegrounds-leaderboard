@@ -28,10 +28,10 @@ if (str_starts_with($query, 'DROP')/* || str_starts_with($query, 'TRUNCATE')*/) 
 }
 
 // JOIN not developed yet
-if (str_contains($query, 'JOIN')) {
-    echo Alerts::danger('You cannot execute JOIN queries as they are in development');
-    return;
-}
+// if (str_contains($query, 'JOIN')) {
+//     echo Alerts::danger('You cannot execute JOIN queries as they are in development');
+//     return;
+// }
 
 $result = MYSQL::query($query);
 

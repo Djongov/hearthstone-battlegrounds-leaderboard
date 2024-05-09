@@ -10,7 +10,7 @@ class Menu
     public static function render(array $array, array $usernameArray, bool $isAdmin, string $theme)
     {
         // Start the nav
-        $html = '<nav class="px-2 bg-gray-50 border-gray-200 dark:border-gray-700 dark:bg-gray-900">';
+        $html = '<nav class="px-2 bg-orange-300 border-gray-200 dark:border-gray-700 dark:bg-gray-900">';
         // Holder div, used to have justify-between
         $html .= '<div class="flex flex-wrap justify-center">';
         // Logo + href to homepage

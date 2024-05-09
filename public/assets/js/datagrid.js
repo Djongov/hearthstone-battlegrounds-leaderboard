@@ -358,7 +358,7 @@ const drawDataGrid = (id) => {
         //scrollCollapse: false,
         paging: true,
         pagingType: 'full_numbers',
-        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        lengthMenu: [[25, 50, -1], [25, 50, "All"]],
         //stateSave: true,
         createdRow: function (row, data, dataIndex) {
             $(row).attr('tabindex', dataIndex)
