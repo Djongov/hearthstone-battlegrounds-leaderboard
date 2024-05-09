@@ -21,6 +21,8 @@ class RequireLogin
             '/solo/us',
             '/solo/eu',
             '/solo/ap',
+            '/solo/combined-leaderboard',
+            '/duos/combined-leaderboard',
             '/6/eu',
             '/6/us',
             '/6/ap',
