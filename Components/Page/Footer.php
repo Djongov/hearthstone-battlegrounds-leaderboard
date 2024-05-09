@@ -14,14 +14,19 @@ class Footer
             <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
             <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© $currentYear <a href="/" class="hover:underline">$title</a>. All Rights Reserved.
             </span>
-            <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
-                <li>
-                    <a href="/docs" class="hover:underline me-4 md:me-6">API</a>
-                </li>
-                <li>
-                    <a href="/contact" class="hover:underline me-4 md:me-6">Contact</a>
-                </li>
-            </ul>
+            <div class="flex">
+                <ul class="flex mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
+                    <li>
+                        <a href="/docs" class="hover:underline me-4 md:me-6">API</a>
+                    </li>
+                    <li>
+                        <a href="/contact" class="hover:underline me-4 md:me-6">Contact</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/Djongov/hearthstone-battlegrounds-leaderboard" class="hover:underline me-4 md:me-6" target="_blank"><img class="h-6 w-6" src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" title="Github, leave a star please:)" alt="Github, leave a star please:)" /></a>
+                    </li>
+                </ul>
+            </div>
             </div>
         </footer>
         HTML;

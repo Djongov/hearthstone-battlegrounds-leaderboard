@@ -1,83 +1,123 @@
-# PHP Tailwind Dashbaord template
+# Heathstone Battlegroudns Leaderboard dashboard and API endpoitns
 
-A template for quickly deploying apps (best suited for dashboard apps) that will run the most modern PHP version, has MySQL DB and authentication methods such as local and Microsoft Entra ID (Azure AD) out of the box and a lot of nice components such as DataGrid and Forms. Suitable for monolith or microservices. Has content-security-policy reporting endpoint, Firewall to filter traffic and much more. Ready for deployment anywhere. Supports out of the box color dark/light as well as color themes as well as user and admin panels. All written in pure PHP.
+This app offers a leaderboard data for Hearthstone Battlegrounds Season 7 Solo and Duos leaderboards with the ability to instant search a player and find out the ranking and rating, as well as statistics for perfomance on each player on the leaderboard. Also a combined leaderbaord that merges all regions.
 
-## Dependencies
+## API
 
-Dependencies you can see in the `composer.json` file. Make sure to run `composer update` on fresh pulls.
+We offer an API to get info about an account. You can search by accountid or rank. This is very useful for addons, bots to query quickly data for a player and display it in your own implementations.
 
-## To Do
+### Season 7 (New)
 
-- Find a way to secure /login?destination=https://bad-domain.com. Logic to rewrite the "state" paramter is there but JS does something to prevent it from functioning well
+#### Solo
 
-## Authentication
+Path variables:
 
-Supports local and Microsoft Entra ID (Azure AD) authentication both and utilizes a secure JWT implementation and verification with support classes.
+region = eu | us | ap
 
-### Microsoft Entra ID Authentication
+Query string
 
-This works by either creating an app registration in your Azure tenant (works with both single-tenant, multi-tenant both) and providing the client id and tenant id in the site-settings.php file or by deploying to an Azure App Service web app with Authentication enabled on the web app
+accountid = {name} (case-insensitive, although the official accountids are with first letter capital)
 
-#### Your own app registration
+OR
 
-1. Create App Registration
-2. In Authentication -> Put the redirect uri - https://example.com/auth-verify
-3. In Authentication -> Enable ID Tokens
-4. In Token Configuration -> Add optional claims - ctry, ipaddr
-5. In App Roles -> Create app role -> display name => App Name Admins, allowed member types => Users/Groups, Value = administrator
-6. To assign admins browse the app registration as Enterprise app -> Users and groups -> Add user/group -> Select users -> Role should be only the new admin role
+rank = {number} (integer)
 
-#### Azure App Service Web app with Authentication enabled
-
-The template will try to detect if this scenario and you will not need to manually create an app registration
-
-### JWT Setup
-
-The app issues JWT tokens to logged in users (Azure AD and local), so you will need to prepare a public and private key pair for the signing and validation. 
-
-#### Creating the public and private keys
-
-So to create yourself a pair of private and public keys use openssl.
-
-`Generate a Private Key`
-
-``` bash
-openssl genpkey -algorithm RSA -out private-key.pem
+``` http
+GET https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/solo/{region}/get?accountid={name}
 ```
 
-`Generate a Public Key from the Private Key`
+OR
 
-``` bash
-openssl rsa -pubout -in private-key.pem -out public-key.pem
+``` http
+GET https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/solo/{region}/get?rank={integer}
 ```
 
-#### Providing them to the app
+Examples by accountid:
 
-After you have created the public and private keys, you need to base64 encode them and provide them to the app. You can do this by either add them manually to the `.env` file or you can pass them as environmental variables. They are read in `./config/site-settings.php` in `JWT_PUBLIC_KEY` and `JWT_PRIVATE_KEY` constants. If you use Docker container, the DOCKERFILE already accoutns for them so you need to pass them as --build-arg when creating the image.
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/solo/eu/get?accountid=QuilboarTTV>
 
-## Routing and available variables
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/solo/us/get?accountid=FastEddieHS>
 
-Routing provides the following variables for each controller
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/solo/ap/get?accountid=buhuidatuan>
 
-**GET** requests
+Examples by rank:
 
-``$usernameArray`` - An array holding user info
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/solo/eu/get?rank=1>
 
-``$isAdmin`` - A boolean if the user is an admin
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/solo/us/get?rank=1>
 
-**POST**, **PUT**, **DELETE** and other REST methods
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/solo/ap/get?rank=1>
 
-``$vars`` - An array holding 4 keys
+#### Duos
 
-**usernameArray** (An array holding user info)
+Path variables:
 
-**isAdmin** (A boolean if the user is an admin)
+region = eu | us | ap
 
-**loggedIn** (A boolean if the user is an admin)
+Query string
 
-**theme** (a string holind the user theme)
+accountid = {name} (case-insensitive, although the official accountids are with first letter capital)
 
-## DataGrid
+OR
 
-max_input_vars needs to be account for
+rank = {number} (integer)
 
+``` http
+GET https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/duos/{region}/get?accountid={name}
+```
+
+``` http
+GET https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/duos/{region}/get?rank={name}
+```
+
+Examples by accountid:
+
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/duos/eu/get?accountid=DayWeen>
+
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/duos/us/get?accountid=Pocky>
+
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/duos/ap/get?accountid=patience>
+
+Examples by rank:
+
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/duos/eu/get?rank=1>
+
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/duos/us/get?rank=1>
+
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/7/duos/ap/get?rank=1>
+
+### Season 6 (last season)
+
+Last season's API is available for historical use. It works the same as the new one just without the solo/duos in the path
+
+Path variables:
+
+region = eu | us | ap
+
+Query string
+
+accountid = {name} (case-insensitive, although the official accountids are with first letter capital)
+
+``` http
+GET https://hearthstone-bg-leaderboard.gamerz-bg.com/api/6/{region}/get?accountid={name}
+```
+
+Examples:
+
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/6/us/get?accountid=jeef>
+
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/6/eu/get?accountid=XQN>
+
+<https://hearthstone-bg-leaderboard.gamerz-bg.com/api/6/ap/get?accountid=patience>
+
+### How this works
+
+As simple as the rest of the 3rd party tools out there. We query the community API for the Hearthstone leaderboards and collect the data so we can present it. We solve the issue that the official leaderboard does not provide a search so people can find themselves or other people and they rank and rating. Also, the community API does not provide a way to do this too with an API call but we do so this opens up great functionality for bots, ingame addons and etc.
+
+### Disclaimer
+
+Our API is currently operating as a public non-authenticated open API which means that you should care for our resources as they are paid from our own pocket. We do not enforce rate limiting but we monitor the access logs so if we see an IP abusing or scraping us, we will block it. We reserve the right to close off the API and put it under authentication if we see that this needs to happen and will provide a mechanism for people to ask for API keys or other forms of authentication, if they want to use it.
+
+### Accuracy of the data
+
+We try to very gently query the Hearthstone community API so we respect them as well, which means that the records returned by our API might not be considered LIVE but should be as close to LIVE as possible.
