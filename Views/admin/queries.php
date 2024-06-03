@@ -16,6 +16,14 @@ if (!$isAdmin) {
 echo HTML::h1('Queries', true);
 
 echo HTML::p('This is a custom query endpoint. You can use this to execute any query you want.');
+$savedQuery = <<<QUERY
+DELETE FROM `rating_progression_season_7_eu_solo` WHERE `accountid`='Bob' AND `rating` < 9200 AND timestamp >= NOW() - INTERVAL 48 HOUR;
+#DELETE FROM `rank_progression_season_7_eu_solo` WHERE `accountid`='Bob' AND `rank` > 200 AND timestamp >= NOW() - INTERVAL 48 HOUR;
+#SELECT accountid, COUNT(*) AS count
+FROM rank_progression_season_7_eu_solo
+GROUP BY accountid
+HAVING count > 1;
+QUERY;
 
 $formOptions = [
     'inputs' => [
@@ -24,11 +32,7 @@ $formOptions = [
                 'label' => 'Query',
                 'name' => 'query',
                 'required' => true,
-                'value' => 'SELECT blocked_uri, violated_directive, domain, COUNT(*) as Count
-FROM csp_reports
-GROUP BY blocked_uri, violated_directive, domain
-ORDER BY Count DESC;
-                #INSERT INTO `users`(`username`, `password`, `email`, `name`, `last_ips`, `origin_country`, `role`, `last_login`, `theme`, `provider`, `enabled`) VALUES (\'test\', null, \'test\', \'test\', \'1.1.1.1\', \'bg\', \'administrator\', NOW(), \'lime\',\'local\',1)',
+                'value' => $savedQuery,
                 'description' => 'Enter your query here',
                 'cols' => 100,
                 'rows' => 10,

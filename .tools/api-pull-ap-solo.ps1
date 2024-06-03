@@ -1,12 +1,12 @@
 ﻿# Let's accept parameters, region, season, type
 param (
-    [string]$region = "EU",
+    [string]$region = "AP",
     [int]$season = 7,
     [string]$type = "solo",
     [int]$startPage = 1,
     [int]$maxPage = 0,
-    [string]$apiKey = "f55b772090315f22133483f0d3d1a6cbbbe375aa0034f9b034a2d5a81a85cf16",
-    [string]$secretHeader = 'badass'
+    [string]$apiKey = "",
+    [string]$secretHeader = ""
 )
 
 # Some other param checks

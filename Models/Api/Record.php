@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Models\Api;
 
 use App\Database\DB;
-use Google\Service\Transcoder\Progress;
 use Models\ProgressionRank;
 use Models\ProgressionRating;
 
@@ -32,17 +31,23 @@ class Record
         $result = $pdo->query($sql);
         return $result->rowCount() > 0;
     }
-    public static function getRecordByAccountId($table, $accountid) : array
+    public static function getRecordByAccountId(string $table, string $accountid) : array
     {
         $db = new DB();
         $pdo = $db->getConnection();
-        $sql = "SELECT * FROM `$table` WHERE `accountid` = '$accountid'";
-        $pdo->query($sql);
-        $result = $pdo->query($sql);
-        if ($result->rowCount() == 0) {
-            return [];
-        }
-        return $result->fetchAll(\PDO::FETCH_ASSOC);
+        $sql = "SELECT * FROM `$table` WHERE `accountid` = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$accountid]);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public static function getRecordById(string $table, int $id) : array
+    {
+        $db = new DB();
+        $pdo = $db->getConnection();
+        $sql = "SELECT * FROM `$table` WHERE `id` = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
     public static function getRecordByRank($table, $rank) : array
     {

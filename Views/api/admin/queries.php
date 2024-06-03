@@ -36,7 +36,7 @@ if (str_starts_with($query, 'DROP')/* || str_starts_with($query, 'TRUNCATE')*/) 
 $result = MYSQL::query($query);
 
 if (str_starts_with($query, 'SELECT')) {
-    if ($result->num_rows === 0) {
+    if ($result->num_rows <= 0) {
         echo Alerts::danger('No data found');
         return;
     }

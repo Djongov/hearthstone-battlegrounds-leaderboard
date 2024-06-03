@@ -10,7 +10,7 @@ if ($Timer.IsPastDue) {
 }
 
 # Define the Azure Automation webhook URL
-$webhookUrl = "https://ce6ef2d6-d759-420f-a083-35cd61ba4ab6.webhook.we.azure-automation.net/webhooks?token=e9fZqt5huS0R%2bPEJoIt7FO8sRFKV5ih4h5c7%2baB8zn8%3d"
+$webhookUrl = ""
 
 # Create a payload if required
 $payload = @{} # Add any required payload data here

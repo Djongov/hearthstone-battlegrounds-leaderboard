@@ -7,25 +7,25 @@ $db = new DB();
 
 $pdo = $db->getConnection();
 
-$sql = "SELECT rank_number AS `rank`, rating, accountid, origin_region
+$sql = "SELECT rank_number AS `rank`, accountid, rating, origin_region
 FROM (
-    SELECT rating, accountid, origin_region,
+    SELECT accountid, rating, origin_region,
            @rownum := @rownum + 1 AS rank_number
     FROM (
-        SELECT rating, accountid,
+        SELECT accountid, rating,
                CASE
                    WHEN source_table = 'battlegrounds_season_7_ap_solo' THEN 'Asia-Pacific'
                    WHEN source_table = 'battlegrounds_season_7_us_solo' THEN 'Americas'
                    WHEN source_table = 'battlegrounds_season_7_eu_solo' THEN 'Europe'
                END AS origin_region
         FROM (
-            SELECT 'battlegrounds_season_7_ap_solo' AS source_table, rating, accountid
+            SELECT 'battlegrounds_season_7_ap_solo' AS source_table, accountid, rating
             FROM battlegrounds_season_7_ap_solo
             UNION ALL
-            SELECT 'battlegrounds_season_7_eu_solo' AS source_table, rating, accountid
+            SELECT 'battlegrounds_season_7_eu_solo' AS source_table, accountid, rating
             FROM battlegrounds_season_7_eu_solo
             UNION ALL
-            SELECT 'battlegrounds_season_7_us_solo' AS source_table, rating, accountid
+            SELECT 'battlegrounds_season_7_us_solo' AS source_table, accountid, rating
             FROM battlegrounds_season_7_us_solo
         ) AS combined_tables
         ORDER BY rating DESC
@@ -44,4 +44,4 @@ if ($result->rowCount() == 0) {
 
 $array = $result->fetchAll(\PDO::FETCH_ASSOC);
 
-echo DataGrid::createTable('combined', $array, $theme, 'Combined Leaderboard', false, false);
+echo DataGrid::createTable('combined', $array, $theme, 'Combined Leaderboard', false, false, false);

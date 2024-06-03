@@ -5,8 +5,8 @@ param (
     [string]$type = "solo",
     [int]$startPage = 18,
     [int]$maxPage = 36,
-    [string]$apiKey = "f55b772090315f22133483f0d3d1a6cbbbe375aa0034f9b034a2d5a81a85cf16",
-    [string]$secretHeader = 'badass'
+    [string]$apiKey = "",
+    [string]$secretHeader = ""
 )
 
 # This would not work on PowerShell 6 or below because of Invoke-RestMethod -SkipCertificateCheck

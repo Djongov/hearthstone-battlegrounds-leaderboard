@@ -62,7 +62,7 @@ define("DEFAULT_METADATA", [
 define("API_KEY_NAME", "X-API-KEY");
 
 // Default theme for unathenticated users and first-time logins, possible values: 'amber', 'green', 'stone', 'rose', 'lime', 'teal', 'sky', 'purple', 'red', 'fuchsia', 'indigo'
-define("COLOR_SCHEME", "amber");
+define("COLOR_SCHEME", "purple");
 
 /*
 
@@ -72,7 +72,8 @@ $_ENV is taking values from the .env file in the root of the project. If you are
 
 */
 
-define("MYSQL_SSL", filter_var($_ENV['MYSQL_SSL'], FILTER_VALIDATE_BOOLEAN));
+//define("MYSQL_SSL", filter_var($_ENV['MYSQL_SSL'], FILTER_VALIDATE_BOOLEAN));
+define("MYSQL_SSL", true);
 define("DB_SSL", filter_var($_ENV['DB_SSL'], FILTER_VALIDATE_BOOLEAN));
 define("DB_HOST", $_ENV['DB_HOST']);
 define("DB_USER", $_ENV['DB_USER']);

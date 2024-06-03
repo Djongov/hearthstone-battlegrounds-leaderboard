@@ -368,7 +368,8 @@ const drawDataGrid = (id) => {
             "targets": "_all",
             "createdCell": function (td, cellData, rowData, row, col) {
                 $(td).addClass('py-4 px-6 border border-slate-400 max-w-md break-words');
-                if (col === 1) {
+                const soloBoardsUrls = ['/solo/us', '/solo/eu', '/solo/ap', '/duos/us', '/duos/eu', '/duos/ap'];
+                if (col === 1 && soloBoardsUrls.includes(window.location.pathname)) {
                     // We need to fetch the current url and derive the params from it
                     const url = new URL(window.location.href);
                     const segments = url.pathname.split('/');
@@ -380,6 +381,22 @@ const drawDataGrid = (id) => {
                     if (type !== "6") {
                         $(td).html(`<a href="/player/7/${type}/${region}?accountid=${cellData}" class="underline">${cellData}</a>`);
                     }
+                }
+                if (col === 1 && window.location.pathname.includes('combined')) {
+                    // Let's construct the player url
+                    const region = rowData[3];
+                    const type = window.location.pathname.split('/')[1];
+                    let regionSmall = '';
+                    if (region === 'Europe') {
+                        regionSmall = 'eu';
+                    }
+                    if (region === 'Asia-Pacific') {
+                        regionSmall = 'ap';
+                    }
+                    if (region === 'Americas') {
+                        regionSmall = 'us';
+                    }
+                    $(td).html(`<a href="/player/7/${type}/${regionSmall}?accountid=${cellData}" class="underline">${cellData}</a>`);
                 }
             }
         }],
