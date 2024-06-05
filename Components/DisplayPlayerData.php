@@ -24,7 +24,10 @@ class DisplayPlayerData
         $this->season = $season;
         $this->main_id = $main_id;
     }
-
+    private function calculatePageNumber($rank)
+    {
+        return ceil($rank / 25);
+    }
     public function display()
     {
         if ($this->main_id !== null) {
@@ -89,6 +92,18 @@ class DisplayPlayerData
         $html .= RatingOverHours::display($this->accountid, $this->region, $this->type, $this->season, 24, $main_id);
 
         $html .= OverallPerformance::display($this->accountid, $ratingData, $rankData, $main_id);
+
+        // Calculate the real leaderboard link
+        $leaderboardId = ($this->type === 'solo') ? 'battlegrounds' : 'battlegroundsduo'; // 'battlegrounds' or 'battlegroundsduo
+        $seasonId = ($this->season === 7) ? 12 : 13;
+        $page = $this->calculatePageNumber($currentRank);
+        if ($page === 0 || $page === 1) {
+            $page = 1;
+        }
+
+        $baseLeaderboardUrl = 'https://hearthstone.blizzard.com/en-us/community/leaderboards?region=' . strtoupper($this->region) . '&leaderboardId=' . $leaderboardId . '&season=' . $seasonId . '&page=' . $page;
+
+        $html .= HTML::p('Check the player on the <a href="' . $baseLeaderboardUrl . '" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:underline">official leaderboard</a>.', ['text-center']);
 
         // Let's center the back button
         $html .= '<div class="w-full md:w-auto flex items-center my-4">';
