@@ -40,7 +40,7 @@ class SeasonData
         $table = $this->getTable();
         $db = new DB();
         $pdo = $db->getConnection();
-        $sql = "SELECT `rank`, `accountid`, `rating`, `last_updated` FROM `$table`";
+        $sql = "SELECT `rank`, `accountid`, `rating` FROM `$table`";
         $pdo->query($sql);
         $result = $pdo->query($sql);
         if ($result->rowCount() == 0) {

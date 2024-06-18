@@ -35,8 +35,6 @@ class RatingOverHours
         $lastEntry = end($array);
 
         // Let's calculate the rating gained
-        $ratingGained = $lastEntry['rating'] - $firstEntry['rating'];
-
-        return $ratingGained;
+        return $lastEntry['rating'] - $firstEntry['rating'];
     }
 }
