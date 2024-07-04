@@ -30,6 +30,10 @@ class RatingOverHours
 
         $array = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
+        if (!$array) {
+            return 0;
+        }
+
         // Now let's select the first entry and the last entry
         $firstEntry = reset($array);
         $lastEntry = end($array);

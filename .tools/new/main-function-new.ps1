@@ -34,7 +34,7 @@
 
 
     $sslMode = $true
-    $ratingGap = 1600
+    $ratingGap = 2100
 
     # Define MySQL connection parameters
     $server = "localhost"
